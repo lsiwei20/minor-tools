@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Lightweight Tools | No Registration</title>
+    <!-- 确保Tailwind正常加载，使用官方CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Free online lightweight tools - no registration, no data upload, works locally in your browser. Convert CSV/Excel to VCF, and more useful tools.">
+    <style>
+        /* 防止CDN加载失败的兜底样式 */
+        body { font-family: system-ui, -apple-system, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 顶部导航 -->
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800">Lightweight Tools</h1>
+            <span class="text-sm text-gray-500">100% Free | No Ads Disturb</span>
+        </div>
+    </header>
+
+    <!-- 首页横幅 -->
+    <section class="bg-blue-600 text-white py-12 md:py-16">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Free Online Lightweight Tools</h2>
+            <p class="text-blue-100 mb-8 max-w-2xl mx-auto">All tools run locally in your browser, no data upload, no registration, no fees. Simple, fast and secure.</p>
+            <a href="#tools" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition">Browse Tools</a>
+        </div>
+    </section>
+
+    <!-- 工具卡片区域 -->
+    <section id="tools" class="py-12">
+        <div class="max-w-5xl mx-auto px-4">
+            <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-8 text-center">Our Tools</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- CSV/Excel转VCF工具卡片 -->
+                <a href="tools/to_vcf.html" class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">CSV/Excel to VCF</h4>
+                    <p class="text-gray-500 text-sm mb-4">Convert your contact list (CSV/Excel) to VCF (vCard) for iPhone, Android and all devices.</p>
+                    <span class="text-blue-600 text-sm font-medium group-hover:underline">Use Tool →</span>
+                </a>
+
+                <!-- 预留工具卡片1 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border-2 border-dashed border-gray-200 hover:border-blue-300 transition flex flex-col items-center justify-center text-center">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                            <path d="M12 5v14M5 12h14"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">Coming Soon</h4>
+                    <p class="text-gray-500 text-sm">More useful lightweight tools are being added.</p>
+                </div>
+
+                <!-- 预留工具卡片2 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border-2 border-dashed border-gray-200 hover:border-blue-300 transition flex flex-col items-center justify-center text-center">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                            <path d="M12 5v14M5 12h14"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">Coming Soon</h4>
+                    <p class="text-gray-500 text-sm">More useful lightweight tools are being added.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-white py-8 border-t border-gray-200">
+        <div class="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm">
+            <p>© 2026 Lightweight Tools. All tools run locally in your browser, no data is uploaded to any server.</p>
+        </div>
+    </footer>
+</body>
+</html>

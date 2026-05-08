@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV/Excel to VCF (vCard) Converter | Free Online</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- 顶部导航栏：返回网站首页 -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="../index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+        ← Back to Home
+      </a>
+      <span class="text-gray-500 text-sm">Free Online Tools</span>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <div class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+      <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">
+        CSV / Excel to VCF (vCard) Converter
+      </h1>
+      <p class="text-gray-500 text-center mb-8">
+        Free online tool to convert contact list to VCF for iPhone / Android
+      </p>
+
+      <!-- 格式说明 -->
+      <div class="bg-blue-50 text-blue-700 text-sm p-3 rounded-lg mb-6">
+        Supported columns: Name, Phone, Organization, Note<br>
+        You can use 2, 3 or 4 columns — all optional except Name + Phone
+      </div>
+
+      <!-- 上传区域 -->
+      <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mb-6 hover:border-blue-400 transition">
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" class="hidden" />
+        <button onclick="document.getElementById('fileInput').click()"
+          class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700">
+          Upload CSV or Excel File
+        </button>
+        <p class="mt-3 text-sm text-gray-500">Supported: .csv, .xlsx, .xls</p>
+      </div>
+
+      <!-- 配置 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Country Code (optional)</label>
+          <input type="text" id="countryCode" placeholder="e.g. +1, +44, +86" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+        </div>
+        <div class="flex items-end">
+          <label class="inline-flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="removeDuplicate" checked class="w-4 h-4">
+            <span class="text-sm text-gray-700">Remove duplicate phone numbers</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 预览 -->
+      <div class="mb-6">
+        <h3 class="font-medium text-gray-800 mb-2">Preview (First 5 Items)</h3>
+        <div id="preview" class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg h-40 overflow-y-auto whitespace-pre-line"></div>
+      </div>
+
+      <!-- 导出 -->
+      <div class="flex justify-center gap-4">
+        <button id="exportBtn" disabled class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 disabled:opacity-50">
+          Export VCF File
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-6 text-sm text-gray-500">
+      <p>✓ All processing runs locally (no data uploaded to server)</p>
+      <p>✓ Supports iPhone, Android, Samsung, Huawei, Xiaomi</p>
+      <p>✓ Supports full name, phone, company, note</p>
+    </div>
+  </div>
+
+  <script>
+    let contactList = [];
+    const fileInput = document.getElementById('fileInput');
+    const exportBtn = document.getElementById('exportBtn');
+    const preview = document.getElementById('preview');
+
+    // 文件上传
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          let workbook;
+          if (file.name.toLowerCase().endsWith('.csv')) {
+            let text = new TextDecoder('utf-8').decode(new Uint8Array(e.target.result));
+            if (text.includes('�')) text = new TextDecoder('gbk').decode(new Uint8Array(e.target.result));
+            workbook = XLSX.read(text, { type: 'string' });
+          } else {
+            workbook = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+          }
+
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(sheet);
+          parseContacts(json);
+        } catch (err) {
+          alert('File parsing failed. Please check your file.');
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    // 解析 4 列：Name / Phone / Organization / Note
+    function parseContacts(json) {
+      contactList = [];
+      const code = document.getElementById('countryCode').value.trim();
+      const dedupe = document.getElementById('removeDuplicate').checked;
+      const phoneSet = new Set();
+
+      json.forEach(row => {
+        let name = '', phone = '', org = '', note = '';
+
+        for (const key in row) {
+          const val = (row[key] || '').toString().trim();
+          const k = key.toLowerCase();
+
+          if (k.includes('name') || k.includes('fullname') || k.includes('姓名')) name = val;
+          if (k.includes('phone') || k.includes('tel') || k.includes('mobile') || k.includes('电话')) phone = val;
+          if (k.includes('org') || k.includes('company') || k.includes('organization') || k.includes('公司')) org = val;
+          if (k.includes('note') || k.includes('remarks') || k.includes('备注')) note = val;
+        }
+
+        if (!name || !phone) return;
+        phone = phone.replace(/\s/g, '');
+        if (code && !phone.startsWith('+')) phone = code + phone;
+        if (dedupe && phoneSet.has(phone)) return;
+        phoneSet.add(phone);
+
+        contactList.push({ name, phone, org, note });
+      });
+
+      showPreview();
+      exportBtn.disabled = contactList.length === 0;
+    }
+
+    // 预览
+    function showPreview() {
+      if (contactList.length === 0) { preview.innerText = 'No valid contacts.'; return; }
+      const list = contactList.slice(0, 5);
+      preview.innerText = list.map((c, i) =>
+        `${i + 1}. Name: ${c.name}\n   Phone: ${c.phone}\n   Org: ${c.org || '-'}\n   Note: ${c.note || '-'}\n`
+      ).join('\n');
+    }
+
+    // 导出 VCF（支持公司 + 备注）
+    exportBtn.addEventListener('click', () => {
+      let vcf = '';
+      contactList.forEach(c => {
+        vcf += 'BEGIN:VCARD\r\n';
+        vcf += 'VERSION:3.0\r\n';
+        vcf += `FN;CHARSET=UTF-8:${c.name}\r\n`;
+        vcf += `TEL;TYPE=CELL:${c.phone}\r\n`;
+        if (c.org) vcf += `ORG;CHARSET=UTF-8:${c.org}\r\n`;
+        if (c.note) vcf += `NOTE;CHARSET=UTF-8:${c.note}\r\n`;
+        vcf += 'END:VCARD\r\n\r\n';
+      });
+
+      const blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `contacts_${Date.now()}.vcf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
