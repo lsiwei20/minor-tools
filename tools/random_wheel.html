@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Wheel - Lightweight Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .wheel-container {
+            perspective: 1000px;
+        }
+        .wheel-3d {
+            transform-style: preserve-3d;
+            box-shadow: 
+                0 0 20px rgba(0,0,0,0.2),
+                inset 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 50%;
+        }
+        .wheel-pointer {
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        }
+        .spin-btn {
+            transition: all 0.3s ease;
+        }
+        .spin-btn:hover {
+            transform: scale(1.05);
+        }
+        .spin-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <nav class="bg-white shadow-sm">
@@ -23,25 +47,48 @@
                 <h2 class="text-lg font-semibold mb-4">Edit Options</h2>
 
                 <div id="optionsContainer" class="space-y-2 mb-4">
-                    <div class="flex gap-2"><input type="text" value="Option 1" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
-                    <div class="flex gap-2"><input type="text" value="Option 2" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
-                    <div class="flex gap-2"><input type="text" value="Option 3" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
-                    <div class="flex gap-2"><input type="text" value="Option 4" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
+                    <div class="flex gap-2">
+                        <input type="text" value="eating" class="flex-1 border px-3 py-2 rounded">
+                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" value="sleeping" class="flex-1 border px-3 py-2 rounded">
+                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" value="jogging" class="flex-1 border px-3 py-2 rounded">
+                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" value="watching tv" class="flex-1 border px-3 py-2 rounded">
+                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                    </div>
                 </div>
 
-                <button id="addOption" class="w-full bg-gray-100 hover:bg-gray-200 py-2 rounded mb-4">+ Add New Option</button>
-                <button id="updateWheel" class="w-full bg-blue-600 text-white py-2 rounded">Update Wheel</button>
+                <button id="addOption" class="w-full bg-gray-100 hover:bg-gray-200 py-2 rounded mb-4 transition-colors">
+                    + Add New Option
+                </button>
+                <button id="updateWheel" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition-colors">
+                    Update Wheel
+                </button>
             </div>
 
             <!-- RIGHT: WHEEL -->
             <div class="flex flex-col items-center">
-                <div class="relative w-80 h-80 mb-6">
-                    <canvas id="wheelCanvas" class="w-full h-full"></canvas>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[20px] border-l-transparent border-r-transparent border-t-red-500"></div>
+                <div class="wheel-container relative w-80 h-80 mb-6">
+                    <canvas id="wheelCanvas" class="wheel-3d w-full h-full"></canvas>
+                    <!-- 立体指针 -->
+                    <div class="wheel-pointer absolute top-0 left-1/2 -translate-x-1/2 z-10">
+                        <div class="relative">
+                            <div class="w-0 h-0 border-l-[15px] border-r-[15px] border-t-[30px] border-l-transparent border-r-transparent border-t-red-500"></div>
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-600 rounded-full -mt-1"></div>
+                        </div>
+                    </div>
                 </div>
 
-                <button id="spinBtn" class="bg-green-600 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow">SPIN THE WHEEL</button>
-                <div id="result" class="mt-4 text-lg font-semibold text-gray-800 h-8"></div>
+                <button id="spinBtn" class="spin-btn bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg">
+                    SPIN THE WHEEL
+                </button>
             </div>
         </div>
     </div>
@@ -50,9 +97,9 @@
         <div class="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm">
             <p class="mb-2">© 2026 Lightweight Tools. All tools run locally in your browser, no data is uploaded to any server.</p>
             <div class="space-x-4">
-                <a href="/privacy-policy.html" class="text-gray-500 hover:text-gray-700">Privacy Policy</a>
-                <a href="/about_us.html" class="text-gray-500 hover:text-gray-700">About Us</a>
-                <a href="/contact_us.html" class="text-gray-500 hover:text-gray-700">Contact Us</a>
+                <a href="/privacy-policy.html" class="text-gray-500 hover:text-gray-700 transition-colors">Privacy Policy</a>
+                <a href="/about_us.html" class="text-gray-500 hover:text-gray-700 transition-colors">About Us</a>
+                <a href="/contact_us.html" class="text-gray-500 hover:text-gray-700 transition-colors">Contact Us</a>
             </div>
         </div>
     </footer>
@@ -60,92 +107,109 @@
     <script>
         const canvas = document.getElementById('wheelCanvas');
         const ctx = canvas.getContext('2d');
-        let items = ["Option 1", "Option 2", "Option 3", "Option 4"];
-        let colors = ["#4285F4","#34A853","#FBBC05","#EA4335","#9C27B0","#00ACC1","#757575","#0288D1"];
+        let items = ["eating", "sleeping", "jogging", "watching tv"];
+        const colors = ["#4285F4", "#34A853", "#FBBC05", "#EA4335", "#9C27B0", "#00ACC1", "#757575", "#0288D1"];
         let spinning = false;
+        let currentRotation = 0;
 
-        // DRAW WHEEL
+        // Draw 3D-style wheel
         function drawWheel() {
             const len = items.length;
             const arc = 2 * Math.PI / len;
-            canvas.width = 320; canvas.height = 320;
-            ctx.clearRect(0,0,320,320);
+            canvas.width = 320;
+            canvas.height = 320;
+            ctx.clearRect(0, 0, 320, 320);
 
-            for(let i=0;i<len;i++){
+            // Draw segments
+            for (let i = 0; i < len; i++) {
                 ctx.beginPath();
-                ctx.fillStyle=colors[i%colors.length];
-                ctx.moveTo(160,160);
-                ctx.arc(160,160,160, i*arc, (i+1)*arc);
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(160, 160);
+                ctx.arc(160, 160, 160, i * arc, (i + 1) * arc);
                 ctx.closePath();
                 ctx.fill();
 
+                // Add text
                 ctx.save();
-                ctx.translate(160,160);
-                ctx.rotate(i*arc + arc/2);
-                ctx.fillStyle="#fff";
-                ctx.font="bold 16px Arial";
-                ctx.textAlign="end";
-                ctx.fillText(items[i],140,6);
+                ctx.translate(160, 160);
+                ctx.rotate(i * arc + arc / 2);
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Arial";
+                ctx.textAlign = "end";
+                ctx.fillText(items[i], 140, 6);
                 ctx.restore();
             }
+
+            // Add center circle for depth
+            ctx.beginPath();
+            ctx.fillStyle = "#fff";
+            ctx.arc(160, 160, 30, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.strokeStyle = "#ddd";
+            ctx.lineWidth = 2;
+            ctx.stroke();
         }
 
-        // SPIN
-        document.getElementById('spinBtn').onclick=()=>{
-            if(spinning) return;
-            spinning=true;
-            let dur=3000+Math.random()*2000;
-            let start=performance.now();
-            let last=0;
-            let rot=0;
+        // Spin function - ONLY animation, NO result calculation
+        document.getElementById('spinBtn').addEventListener('click', () => {
+            if (spinning) return;
+            spinning = true;
+            const spinDuration = 3000 + Math.random() * 2000;
+            const totalRotation = 1800 + Math.random() * 1800;
+            const startRotation = currentRotation;
+            const startTime = performance.now();
 
-            function step(t){
-                const p=Math.min(1,(t-start)/dur);
-                const e=1-Math.pow(1-p,3);
-                const d=e*1800;
-                const delta=d-last;
-                last=d;
-                canvas.style.transform=`rotate(${d}deg)`;
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                currentRotation = startRotation + totalRotation * easeOut;
+                canvas.style.transform = `rotate(${currentRotation}deg)`;
 
-                if(p<1) requestAnimationFrame(step);
-                else{
-                    spinning=false;
-                    const deg=(d%360);
-                    const slice=360/items.length;
-                    const idx=items.length-1-Math.floor(deg/slice);
-                    document.getElementById('result').innerText="Result: "+items[idx];
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    spinning = false;
+                    // NO RESULT DISPLAY HERE
                 }
             }
-            requestAnimationFrame(step);
-        }
+            requestAnimationFrame(animate);
+        });
 
-        // ADD OPTION
-        document.getElementById('addOption').onclick=()=>{
-            const div=document.createElement('div');
-            div.className="flex gap-2";
-            div.innerHTML=`<input type="text" placeholder="Enter option" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button>`;
+        // Add new option
+        document.getElementById('addOption').addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.className = "flex gap-2";
+            div.innerHTML = `
+                <input type="text" placeholder="Enter option" class="flex-1 border px-3 py-2 rounded">
+                <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+            `;
             document.getElementById('optionsContainer').appendChild(div);
-        }
+        });
 
-        // DELETE
-        document.addEventListener('click',e=>{
-            if(e.target.classList.contains('delBtn')){
+        // Delete option
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delBtn')) {
                 e.target.parentElement.remove();
             }
         });
 
-        // UPDATE
-        document.getElementById('updateWheel').onclick=()=>{
-            const arr=[];
-            document.querySelectorAll('#optionsContainer input').forEach(i=>{
-                const v=i.value.trim();
-                if(v)arr.push(v);
+        // Update wheel
+        document.getElementById('updateWheel').addEventListener('click', () => {
+            const arr = [];
+            document.querySelectorAll('#optionsContainer input').forEach(input => {
+                const value = input.value.trim();
+                if (value) arr.push(value);
             });
-            if(arr.length<2)return alert("At least 2 options");
-            items=arr;
+            if (arr.length < 2) {
+                alert("Please add at least 2 options");
+                return;
+            }
+            items = arr;
             drawWheel();
-        }
+        });
 
+        // Initial draw
         drawWheel();
     </script>
 </body>
