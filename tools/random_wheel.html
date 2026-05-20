@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Wheel - Lightweight Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="text-xl font-bold text-blue-600">Lightweight Tools</a>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-4 py-10">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Random Wheel Spinner</h1>
+        <p class="text-center text-gray-500 mb-10">Customize your options, spin and get a random result!</p>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- LEFT: CONFIG -->
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h2 class="text-lg font-semibold mb-4">Edit Options</h2>
+
+                <div id="optionsContainer" class="space-y-2 mb-4">
+                    <div class="flex gap-2"><input type="text" value="Option 1" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
+                    <div class="flex gap-2"><input type="text" value="Option 2" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
+                    <div class="flex gap-2"><input type="text" value="Option 3" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
+                    <div class="flex gap-2"><input type="text" value="Option 4" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button></div>
+                </div>
+
+                <button id="addOption" class="w-full bg-gray-100 hover:bg-gray-200 py-2 rounded mb-4">+ Add New Option</button>
+                <button id="updateWheel" class="w-full bg-blue-600 text-white py-2 rounded">Update Wheel</button>
+            </div>
+
+            <!-- RIGHT: WHEEL -->
+            <div class="flex flex-col items-center">
+                <div class="relative w-80 h-80 mb-6">
+                    <canvas id="wheelCanvas" class="w-full h-full"></canvas>
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[20px] border-l-transparent border-r-transparent border-t-red-500"></div>
+                </div>
+
+                <button id="spinBtn" class="bg-green-600 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow">SPIN THE WHEEL</button>
+                <div id="result" class="mt-4 text-lg font-semibold text-gray-800 h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white py-8 border-t border-gray-200 mt-10">
+        <div class="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm">
+            <p class="mb-2">© 2026 Lightweight Tools. All tools run locally in your browser, no data is uploaded to any server.</p>
+            <div class="space-x-4">
+                <a href="/privacy-policy.html" class="text-gray-500 hover:text-gray-700">Privacy Policy</a>
+                <a href="/about_us.html" class="text-gray-500 hover:text-gray-700">About Us</a>
+                <a href="/contact_us.html" class="text-gray-500 hover:text-gray-700">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        let items = ["Option 1", "Option 2", "Option 3", "Option 4"];
+        let colors = ["#4285F4","#34A853","#FBBC05","#EA4335","#9C27B0","#00ACC1","#757575","#0288D1"];
+        let spinning = false;
+
+        // DRAW WHEEL
+        function drawWheel() {
+            const len = items.length;
+            const arc = 2 * Math.PI / len;
+            canvas.width = 320; canvas.height = 320;
+            ctx.clearRect(0,0,320,320);
+
+            for(let i=0;i<len;i++){
+                ctx.beginPath();
+                ctx.fillStyle=colors[i%colors.length];
+                ctx.moveTo(160,160);
+                ctx.arc(160,160,160, i*arc, (i+1)*arc);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(160,160);
+                ctx.rotate(i*arc + arc/2);
+                ctx.fillStyle="#fff";
+                ctx.font="bold 16px Arial";
+                ctx.textAlign="end";
+                ctx.fillText(items[i],140,6);
+                ctx.restore();
+            }
+        }
+
+        // SPIN
+        document.getElementById('spinBtn').onclick=()=>{
+            if(spinning) return;
+            spinning=true;
+            let dur=3000+Math.random()*2000;
+            let start=performance.now();
+            let last=0;
+            let rot=0;
+
+            function step(t){
+                const p=Math.min(1,(t-start)/dur);
+                const e=1-Math.pow(1-p,3);
+                const d=e*1800;
+                const delta=d-last;
+                last=d;
+                canvas.style.transform=`rotate(${d}deg)`;
+
+                if(p<1) requestAnimationFrame(step);
+                else{
+                    spinning=false;
+                    const deg=(d%360);
+                    const slice=360/items.length;
+                    const idx=items.length-1-Math.floor(deg/slice);
+                    document.getElementById('result').innerText="Result: "+items[idx];
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        // ADD OPTION
+        document.getElementById('addOption').onclick=()=>{
+            const div=document.createElement('div');
+            div.className="flex gap-2";
+            div.innerHTML=`<input type="text" placeholder="Enter option" class="flex-1 border px-3 py-2 rounded"><button class="delBtn text-red-500">✕</button>`;
+            document.getElementById('optionsContainer').appendChild(div);
+        }
+
+        // DELETE
+        document.addEventListener('click',e=>{
+            if(e.target.classList.contains('delBtn')){
+                e.target.parentElement.remove();
+            }
+        });
+
+        // UPDATE
+        document.getElementById('updateWheel').onclick=()=>{
+            const arr=[];
+            document.querySelectorAll('#optionsContainer input').forEach(i=>{
+                const v=i.value.trim();
+                if(v)arr.push(v);
+            });
+            if(arr.length<2)return alert("At least 2 options");
+            items=arr;
+            drawWheel();
+        }
+
+        drawWheel();
+    </script>
+</body>
+</html>
