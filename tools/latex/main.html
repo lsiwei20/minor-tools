@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>LaTeX Editor</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="symbols/common.js"></script>
+<script src="symbols/greek.js"></script>
+<script src="symbols/fraction-derivative.js"></script>
+<script src="symbols/radical-subsuper.js"></script>
+<script src="symbols/limit.js"></script>
+<script src="symbols/trigonometric.js"></script>
+<script src="symbols/integral.js"></script>
+<script src="symbols/big-operators.js"></script>
+<script src="symbols/brackets.js"></script>
+<script src="symbols/matrix.js"></script>
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #fff;
+  color: #333;
+}
+.header-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+.header-bar .logo-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+.header-bar .header-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #6b7280;
+}
+.wrapper {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.card-header .title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+.tabs button {
+  border: none;
+  background: transparent;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.tabs button.active {
+  border-bottom-color: #2563eb;
+  color: #2563eb;
+  font-weight: 500;
+}
+.tab-content {
+  padding: 16px;
+}
+.quick-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  height: 80px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  color: #4b5563;
+  user-select: none;
+}
+.tool-btn .icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+.tool-btn:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+.row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.left-actions,
+.right-actions {
+  display: flex;
+  gap: 10px;
+}
+.btn {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+textarea {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+}
+.output-area {
+  margin-top: 16px;
+}
+.output-area .card-header {
+  border-top: 1px solid #e5e7eb;
+}
+.output-content {
+  padding: 16px;
+  min-height: 120px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 28px;
+}
+.output-content .placeholder {
+  color: #9ca3af;
+  opacity: 0.4;
+}
+
+/* 弹窗样式 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+.modal.show {
+  display: flex;
+}
+.modal-box {
+  background: white;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.modal-header {
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+.symbol-group {
+  margin-bottom: 16px;
+}
+.symbol-group h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #666;
+}
+.symbol-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.symbol-item {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.symbol-item:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <div class="logo-title">LaTeX公式编辑器</div>
+  <div class="header-actions">
+    <span>编辑器</span>
+    <span>帮助</span>
+    <span>日志</span>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="card">
+    <div class="card-header">
+      <div class="title">
+        <span>✏️</span>
+        <span>输入区域 Input</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="active" data-tab="quick">快捷工具</button>
+      <button data-tab="templates">公式模板</button>
+      <button data-tab="image">图片识别</button>
+    </div>
+
+    <div class="tab-content" id="tab-quick">
+      <div class="quick-bar">
+        <div class="tool-btn" id="btn-common">
+          <div class="icon">∀∩∞</div>
+          <div>常用符号</div>
+        </div>
+        <div class="tool-btn" id="btn-greek">
+          <div class="icon">αβγ</div>
+          <div>希腊字母</div>
+        </div>
+        <div class="tool-btn" id="btn-fraction">
+          <div class="icon">x/y</div>
+          <div>分数微分</div>
+        </div>
+        <div class="tool-btn" id="btn-radical">
+          <div class="icon">√</div>
+          <div>根式对数</div>
+        </div>
+        <div class="tool-btn" id="btn-limit">
+          <div class="icon">lim</div>
+          <div>极限</div>
+        </div>
+        <div class="tool-btn" id="btn-trigonometric">
+          <div class="icon">sin</div>
+          <div>三角函数</div>
+        </div>
+        <div class="tool-btn" id="btn-integral">
+          <div class="icon">∫</div>
+          <div>积分运算</div>
+        </div>
+        <div class="tool-btn" id="btn-big-operators">
+          <div class="icon">Σ</div>
+          <div>大型运算</div>
+        </div>
+        <div class="tool-btn" id="btn-brackets">
+          <div class="icon">()</div>
+          <div>括号</div>
+        </div>
+        <div class="tool-btn" id="btn-matrix">
+          <div class="icon">[]</div>
+          <div>矩阵</div>
+        </div>
+      </div>
+
+      <div class="row-actions">
+        <div class="left-actions">
+          <button class="btn">颜色</button>
+          <button class="btn">字体</button>
+          <button class="btn">字号</button>
+        </div>
+        <div class="right-actions">
+          <button class="btn" id="clearBtn">清空</button>
+        </div>
+      </div>
+
+      <textarea id="latexInput" placeholder="请输入LaTeX表达式"></textarea>
+    </div>
+
+    <div class="tab-content" id="tab-templates" style="display:none;">公式模板（待实现）</div>
+    <div class="tab-content" id="tab-image" style="display:none;">图片识别（待实现）</div>
+  </div>
+
+  <div class="output-area">
+    <div class="card-header">
+      <div class="title">
+        <span>⬇</span>
+        <span>输出区域 Output</span>
+      </div>
+    </div>
+    <div class="output-content" id="output">
+      <span class="placeholder">LATEX</span>
+    </div>
+  </div>
+</div>
+
+<!-- 符号弹窗 -->
+<div class="modal" id="symbolModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h5 id="modalTitle">符号面板</h5>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      加载中...
+    </div>
+  </div>
+</div>
+
+<script>
+// 基础
+const input = document.getElementById('latexInput');
+const output = document.getElementById('output');
+const modal = document.getElementById('symbolModal');
+const modalBody = document.getElementById('modalBody');
+const modalTitle = document.getElementById('modalTitle');
+const modalClose = document.getElementById('modalClose');
+
+// 实时渲染
+function renderLatex() {
+  const code = input.value.trim();
+  if (!code) {
+    output.innerHTML = '<span class="placeholder">LATEX</span>';
+    return;
+  }
+  try {
+    output.innerHTML = katex.renderToString(code, { throwOnError: false, displayMode: true });
+  } catch (e) {
+    output.innerHTML = '<span style="color:red;">公式错误</span>';
+  }
+}
+input.addEventListener('input', renderLatex);
+
+// 清空
+document.getElementById('clearBtn').onclick = () => {
+  input.value = '';
+  renderLatex();
+};
+
+// 弹窗控制
+function openModal(title, data) {
+  modalTitle.innerText = title;
+  modalBody.innerHTML = '';
+  data.forEach(group => {
+    const div = document.createElement('div');
+    div.className = 'symbol-group';
+    div.innerHTML = `<h4>${group.type}</h4><div class="symbol-grid"></div>`;
+    const grid = div.querySelector('.symbol-grid');
+    group.list.forEach(item => {
+      const btn = document.createElement('div');
+      btn.className = 'symbol-item';
+      btn.innerText = item.text;
+      btn.onclick = () => {
+        insertText(item.latex);
+        renderLatex();
+        modal.classList.remove('show');
+      };
+      grid.appendChild(btn);
+    });
+    modalBody.appendChild(div);
+  });
+  modal.classList.add('show');
+}
+modalClose.onclick = () => modal.classList.remove('show');
+modal.onclick = (e) => {
+  if (e.target === modal) modal.classList.remove('show');
+};
+
+// 插入文本
+// 插入文本时自动前后加空格，避免符号粘在一起
+function insertText(text) {
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+
+  // 在要插入的文本前后加空格
+  const textWithSpace = ' ' + text + ' ';
+
+  // 拼接新内容
+  const newVal =
+    input.value.substring(0, start) +
+    textWithSpace +
+    input.value.substring(end);
+
+  input.value = newVal;
+  input.focus();
+
+  // 把光标移到插入文本的后面
+  const newCursorPos = start + textWithSpace.length;
+  input.setSelectionRange(newCursorPos, newCursorPos);
+}
+
+// 加载 JS 并打开
+document.getElementById('btn-common').onclick = () => {
+  openModal('常用符号', commonSymbols);
+};
+document.getElementById('btn-greek').onclick = () => {
+  openModal('希腊字母', greekSymbols);
+};
+document.getElementById('btn-fraction').onclick = () => {
+  openModal('分数微分', fractionDerivativeSymbols);
+};
+document.getElementById('btn-radical').onclick = () => {
+  openModal('根式对数', radicalSubsuperSymbols);
+};
+document.getElementById('btn-limit').onclick = () => {
+  openModal('极限', limitSymbols);
+};
+document.getElementById('btn-trigonometric').onclick = () => {
+  openModal('三角函数', trigonometricSymbols);
+};
+document.getElementById('btn-integral').onclick = () => {
+  openModal('积分运算', integralSymbols);
+};
+document.getElementById('btn-big-operators').onclick = () => {
+  openModal('大型运算', bigOperatorsSymbols);
+};
+document.getElementById('btn-brackets').onclick = () => {
+  openModal('括号取整', bracketsSymbols);
+};
+document.getElementById('btn-matrix').onclick = () => {
+  openModal('矩阵', matrixSymbols);
+};
+
+renderLatex();
+</script>
+</body>
+</html>
