@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>LaTeX Editor</title>
+<title>LaTeX Editor - Free Online Math Formula Editor | Lightweight Tools</title>
+<meta name="description" content="Free online LaTeX editor for mathematical formulas. Easy to use, no installation, supports algebra, calculus, geometry, matrices, and more. Create perfect math expressions instantly.">
+<meta name="keywords" content="LaTeX editor, math formula editor, online LaTeX, mathematical formulas, free LaTeX tool, calculus equations, algebra editor">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="symbols/common.js"></script>
@@ -246,16 +248,113 @@ textarea {
   background: #eff6ff;
   border-color: #2563eb;
 }
+
+/* === 公式模板样式 === */
+.cat-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.cat-btn {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+.cat-btn.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+.subcat-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+.subcat-btn {
+  padding: 5px 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+.subcat-btn.active {
+  background: #eef2ff;
+  color: #2563eb;
+  border-color: #c7d2fe;
+  font-weight: 500;
+}
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.template-item {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background: #fff;
+}
+.template-item:hover {
+  border-color: #2563eb;
+  background: #f8fafc;
+}
+.template-latex {
+  font-size: 16px;
+  margin-bottom: 4px;
+  min-height: 24px;
+}
+.template-desc {
+  font-size: 12px;
+  color: #666;
+}
+
+/* 新增：底部内容区域样式 */
+.content-section {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 16px;
+  line-height: 1.7;
+  color: #333;
+}
+.content-section h2 {
+  font-size: 22px;
+  color: #1e40af;
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+.content-section p {
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: #374151;
+}
+.content-section ul {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+.content-section li {
+  margin-bottom: 6px;
+  font-size: 15px;
+}
 </style>
 </head>
 <body>
 
 <div class="header-bar">
-  <div class="logo-title">LaTeX公式编辑器</div>
+  <div class="logo-title">LaTeX Formula Editor</div>
   <div class="header-actions">
-    <span>编辑器</span>
-    <span>帮助</span>
-    <span>日志</span>
+    <span>Editor</span>
+    <span>Help</span>
+    <span>About</span>
   </div>
 </div>
 
@@ -264,83 +363,87 @@ textarea {
     <div class="card-header">
       <div class="title">
         <span>✏️</span>
-        <span>输入区域 Input</span>
+        <span>Input Area</span>
       </div>
     </div>
 
     <div class="tabs">
-      <button class="active" data-tab="quick">快捷工具</button>
-      <button data-tab="templates">公式模板</button>
-      <button data-tab="image">图片识别</button>
+      <button class="active" data-tab="quick">Quick Symbols</button>
+      <button data-tab="templates">Formula Templates</button>
     </div>
 
+    <!-- 快捷工具 -->
     <div class="tab-content" id="tab-quick">
       <div class="quick-bar">
         <div class="tool-btn" id="btn-common">
           <div class="icon">∀∩∞</div>
-          <div>常用符号</div>
+          <div>Common</div>
         </div>
         <div class="tool-btn" id="btn-greek">
           <div class="icon">αβγ</div>
-          <div>希腊字母</div>
+          <div>Greek</div>
         </div>
         <div class="tool-btn" id="btn-fraction">
           <div class="icon">x/y</div>
-          <div>分数微分</div>
+          <div>Fraction</div>
         </div>
         <div class="tool-btn" id="btn-radical">
           <div class="icon">√</div>
-          <div>根式对数</div>
+          <div>Radical</div>
         </div>
         <div class="tool-btn" id="btn-limit">
           <div class="icon">lim</div>
-          <div>极限</div>
+          <div>Limit</div>
         </div>
         <div class="tool-btn" id="btn-trigonometric">
           <div class="icon">sin</div>
-          <div>三角函数</div>
+          <div>Trigonometry</div>
         </div>
         <div class="tool-btn" id="btn-integral">
           <div class="icon">∫</div>
-          <div>积分运算</div>
+          <div>Integral</div>
         </div>
         <div class="tool-btn" id="btn-big-operators">
           <div class="icon">Σ</div>
-          <div>大型运算</div>
+          <div>Summation</div>
         </div>
         <div class="tool-btn" id="btn-brackets">
           <div class="icon">()</div>
-          <div>括号</div>
+          <div>Brackets</div>
         </div>
         <div class="tool-btn" id="btn-matrix">
           <div class="icon">[]</div>
-          <div>矩阵</div>
+          <div>Matrix</div>
         </div>
       </div>
 
       <div class="row-actions">
         <div class="left-actions">
-          <button class="btn">颜色</button>
-          <button class="btn">字体</button>
-          <button class="btn">字号</button>
+          <button class="btn">Color</button>
+          <button class="btn">Font</button>
+          <button class="btn">Size</button>
         </div>
         <div class="right-actions">
-          <button class="btn" id="clearBtn">清空</button>
+          <button class="btn" id="clearBtn">Clear</button>
         </div>
       </div>
 
-      <textarea id="latexInput" placeholder="请输入LaTeX表达式"></textarea>
+      <textarea id="latexInput" placeholder="Enter LaTeX expression here"></textarea>
     </div>
 
-    <div class="tab-content" id="tab-templates" style="display:none;">公式模板（待实现）</div>
-    <div class="tab-content" id="tab-image" style="display:none;">图片识别（待实现）</div>
+    <!-- === 公式模板（已实现两层分类） === -->
+    <div class="tab-content" id="tab-templates" style="display:none;">
+      <div id="templateCategories" class="cat-tabs"></div>
+      <div id="templateSubCategories" class="subcat-tabs"></div>
+      <div id="templateList" class="template-grid"></div>
+    </div>
   </div>
 
   <div class="output-area">
     <div class="card-header">
       <div class="title">
         <span>⬇</span>
-        <span>输出区域 Output</span>
+        <span>Output Preview</span>
       </div>
     </div>
     <div class="output-content" id="output">
@@ -349,15 +452,60 @@ textarea {
   </div>
 </div>
 
+<!-- ====================== 新增：大量SEO内容区域 ====================== -->
+<div class="content-section">
+  <h2>About LaTeX Editor</h2>
+  <p>Our free online LaTeX Editor is designed to help students, teachers, engineers, and researchers create high-quality mathematical formulas quickly and easily. Whether you need simple algebraic expressions or complex calculus equations, this tool provides everything you need in one lightweight platform.</p>
+  <p>You don’t need to install any software or learn complicated commands. Just click the symbols you need, edit the text, and get perfect, professional math formulas instantly.</p>
+
+  <h2>Key Features</h2>
+  <ul>
+    <li>Free to use, no registration required</li>
+    <li>Supports algebra, geometry, calculus, trigonometry, and more</li>
+    <li>One-click insertion of Greek letters, fractions, integrals, matrices</li>
+    <li>Real-time formula preview as you type</li>
+    <li>Clean, simple, mobile-friendly interface</li>
+    <li>All operations run locally in your browser</li>
+  </ul>
+
+  <h2>Who Can Use This Tool?</h2>
+  <p>This LaTeX Editor is perfect for:</p>
+  <ul>
+    <li>High school and college students learning math</li>
+    <li>Teachers preparing homework or exams</li>
+    <li>Researchers writing papers and reports</li>
+    <li>Engineers using mathematical formulas daily</li>
+    <li>Anyone who needs clean, professional math expressions</li>
+  </ul>
+
+  <h2>Why Choose Our Online LaTeX Editor?</h2>
+  <p>Unlike heavy desktop software, our tool is fast, simple, and accessible from any device. You can create equations for homework, essays, presentations, websites, or research papers with zero effort.</p>
+  <p>We provide pre-built formula templates so you don’t have to type complex LaTeX code manually. This saves you time and reduces mistakes.</p>
+
+  <h2>Supported Mathematical Areas</h2>
+  <p>Our editor fully supports:</p>
+  <ul>
+    <li>Basic Algebra & Equations</li>
+    <li>Geometry & Trigonometric Functions</li>
+    <li>Limits, Derivatives, and Integrals</li>
+    <li>Matrices, Vectors, and Linear Algebra</li>
+    <li>Summation, Logarithms, and Special Symbols</li>
+  </ul>
+
+  <h2>Final Notes</h2>
+  <p>This tool is 100% free and safe to use. No data is sent to any server, and all formulas stay on your device. We are committed to providing useful, lightweight tools for education and work.</p>
+</div>
+<!-- ================================================================= -->
+
 <!-- 符号弹窗 -->
 <div class="modal" id="symbolModal">
   <div class="modal-box">
     <div class="modal-header">
-      <h5 id="modalTitle">符号面板</h5>
+      <h5 id="modalTitle">Symbol Panel</h5>
       <button class="modal-close" id="modalClose">×</button>
     </div>
     <div class="modal-body" id="modalBody">
-      加载中...
+      Loading...
     </div>
   </div>
 </div>
@@ -371,6 +519,132 @@ const modalBody = document.getElementById('modalBody');
 const modalTitle = document.getElementById('modalTitle');
 const modalClose = document.getElementById('modalClose');
 
+// ==============================
+// 公式模板 - 两层分类数据
+// ==============================
+const templateData = {
+  algebra: {
+    name: "Algebra",
+    sub: {
+      basic: { name: "Basic Operations", list: [
+        { latex: "a + b = c", desc: "Addition" },
+        { latex: "a - b = c", desc: "Subtraction" },
+        { latex: "a \\times b = c", desc: "Multiplication" },
+        { latex: "a \\div b = c", desc: "Division" }
+      ]},
+      equation: { name: "Equations", list: [
+        { latex: "ax^2 + bx + c = 0", desc: "Quadratic Equation" },
+        { latex: "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}", desc: "Root Formula" }
+      ]}
+    }
+  },
+  geometry: {
+    name: "Geometry",
+    sub: {
+      triangle: { name: "Triangle", list: [
+        { latex: "a^2 + b^2 = c^2", desc: "Pythagorean Theorem" },
+        { latex: "\\sin^2\\alpha + \\cos^2\\alpha = 1", desc: "Trigonometric Identity" }
+      ]},
+      circle: { name: "Circle", list: [
+        { latex: "S = \\pi r^2", desc: "Circle Area" },
+        { latex: "C = 2\\pi r", desc: "Circle Perimeter" }
+      ]}
+    }
+  },
+  calculus: {
+    name: "Calculus",
+    sub: {
+      derivative: { name: "Derivatives", list: [
+        { latex: "\\frac{dy}{dx}", desc: "First Derivative" },
+        { latex: "(x^n)' = nx^{n-1}", desc: "Power Rule" }
+      ]},
+      integral: { name: "Integrals", list: [
+        { latex: "\\int f(x) dx", desc: "Indefinite Integral" },
+        { latex: "\\int_{a}^{b} f(x) dx", desc: "Definite Integral" }
+      ]}
+    }
+  }
+};
+
+let currentCat = "algebra";
+let currentSub = "basic";
+
+// 渲染一级分类
+function renderCategories() {
+  const container = document.getElementById("templateCategories");
+  container.innerHTML = "";
+  Object.keys(templateData).forEach(key => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn " + (key === currentCat ? "active" : "");
+    btn.innerText = templateData[key].name;
+    btn.onclick = () => {
+      currentCat = key;
+      currentSub = Object.keys(templateData[key].sub)[0];
+      renderAllTemplates();
+    };
+    container.appendChild(btn);
+  });
+}
+
+// 渲染二级分类
+function renderSubCategories() {
+  const container = document.getElementById("templateSubCategories");
+  container.innerHTML = "";
+  const subs = templateData[currentCat].sub;
+  Object.keys(subs).forEach(key => {
+    const btn = document.createElement("button");
+    btn.className = "subcat-btn " + (key === currentSub ? "active" : "");
+    btn.innerText = subs[key].name;
+    btn.onclick = () => {
+      document.querySelectorAll(".subcat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentSub = key;
+      renderTemplateItems();
+    };
+    container.appendChild(btn);
+  });
+}
+
+// 渲染公式按钮
+function renderTemplateItems() {
+  const container = document.getElementById("templateList");
+  container.innerHTML = "";
+  const items = templateData[currentCat].sub[currentSub].list;
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "template-item";
+    div.innerHTML = `
+      <div class="template-latex"></div>
+      <div class="template-desc">${item.desc}</div>
+    `;
+    div.onclick = () => {
+      insertText(item.latex);
+      renderLatex();
+    };
+    container.appendChild(div);
+    katex.render(item.latex, div.querySelector(".template-latex"), { throwOnError: false });
+  });
+}
+
+// 全部刷新
+function renderAllTemplates() {
+  renderCategories();
+  renderSubCategories();
+  renderTemplateItems();
+}
+
+// 标签切换
+document.querySelectorAll(".tabs button").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+    tab.classList.add("active");
+    const target = tab.dataset.tab;
+    document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+    document.getElementById(`tab-${target}`).style.display = "block";
+    if (target === "templates") renderAllTemplates();
+  });
+});
+
 // 实时渲染
 function renderLatex() {
   const code = input.value.trim();
@@ -381,7 +655,7 @@ function renderLatex() {
   try {
     output.innerHTML = katex.renderToString(code, { throwOnError: false, displayMode: true });
   } catch (e) {
-    output.innerHTML = '<span style="color:red;">公式错误</span>';
+    output.innerHTML = '<span style="color:red;">Formula Error</span>';
   }
 }
 input.addEventListener('input', renderLatex);
@@ -422,59 +696,28 @@ modal.onclick = (e) => {
 };
 
 // 插入文本
-// 插入文本时自动前后加空格，避免符号粘在一起
 function insertText(text) {
   const start = input.selectionStart;
   const end = input.selectionEnd;
-
-  // 在要插入的文本前后加空格
   const textWithSpace = ' ' + text + ' ';
-
-  // 拼接新内容
-  const newVal =
-    input.value.substring(0, start) +
-    textWithSpace +
-    input.value.substring(end);
-
+  const newVal = input.value.substring(0, start) + textWithSpace + input.value.substring(end);
   input.value = newVal;
   input.focus();
-
-  // 把光标移到插入文本的后面
   const newCursorPos = start + textWithSpace.length;
   input.setSelectionRange(newCursorPos, newCursorPos);
 }
 
-// 加载 JS 并打开
-document.getElementById('btn-common').onclick = () => {
-  openModal('常用符号', commonSymbols);
-};
-document.getElementById('btn-greek').onclick = () => {
-  openModal('希腊字母', greekSymbols);
-};
-document.getElementById('btn-fraction').onclick = () => {
-  openModal('分数微分', fractionDerivativeSymbols);
-};
-document.getElementById('btn-radical').onclick = () => {
-  openModal('根式对数', radicalSubsuperSymbols);
-};
-document.getElementById('btn-limit').onclick = () => {
-  openModal('极限', limitSymbols);
-};
-document.getElementById('btn-trigonometric').onclick = () => {
-  openModal('三角函数', trigonometricSymbols);
-};
-document.getElementById('btn-integral').onclick = () => {
-  openModal('积分运算', integralSymbols);
-};
-document.getElementById('btn-big-operators').onclick = () => {
-  openModal('大型运算', bigOperatorsSymbols);
-};
-document.getElementById('btn-brackets').onclick = () => {
-  openModal('括号取整', bracketsSymbols);
-};
-document.getElementById('btn-matrix').onclick = () => {
-  openModal('矩阵', matrixSymbols);
-};
+// 快捷符号按钮
+document.getElementById('btn-common').onclick = () => { openModal('Common Symbols', commonSymbols); };
+document.getElementById('btn-greek').onclick = () => { openModal('Greek Letters', greekSymbols); };
+document.getElementById('btn-fraction').onclick = () => { openModal('Fraction & Derivative', fractionDerivativeSymbols); };
+document.getElementById('btn-radical').onclick = () => { openModal('Radical & Log', radicalSubsuperSymbols); };
+document.getElementById('btn-limit').onclick = () => { openModal('Limit', limitSymbols); };
+document.getElementById('btn-trigonometric').onclick = () => { openModal('Trigonometric', trigonometricSymbols); };
+document.getElementById('btn-integral').onclick = () => { openModal('Integral', integralSymbols); };
+document.getElementById('btn-big-operators').onclick = () => { openModal('Big Operators', bigOperatorsSymbols); };
+document.getElementById('btn-brackets').onclick = () => { openModal('Brackets', bracketsSymbols); };
+document.getElementById('btn-matrix').onclick = () => { openModal('Matrix', matrixSymbols); };
 
 renderLatex();
 </script>
