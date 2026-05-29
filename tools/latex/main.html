@@ -526,42 +526,256 @@ const templateData = {
   algebra: {
     name: "Algebra",
     sub: {
-      basic: { name: "Basic Operations", list: [
-        { latex: "a + b = c", desc: "Addition" },
-        { latex: "a - b = c", desc: "Subtraction" },
-        { latex: "a \\times b = c", desc: "Multiplication" },
-        { latex: "a \\div b = c", desc: "Division" }
-      ]},
-      equation: { name: "Equations", list: [
-        { latex: "ax^2 + bx + c = 0", desc: "Quadratic Equation" },
-        { latex: "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}", desc: "Root Formula" }
-      ]}
+      basic: {
+        name: "Basic Operations",
+        list: [
+          { latex: "a + b = c", desc: "Addition" },
+          { latex: "a - b = c", desc: "Subtraction" },
+          { latex: "a \\times b = c", desc: "Multiplication" },
+          { latex: "a \\div b = c", desc: "Division" },
+          { latex: "a^0 = 1", desc: "Zero Exponent" },
+          { latex: "a^{-n} = \\frac{1}{a^n}", desc: "Negative Exponent" },
+          { latex: "a^m \\times a^n = a^{m+n}", desc: "Exponent Multiplication" },
+          { latex: "(a^m)^n = a^{m \\times n}", desc: "Power of Power" },
+          { latex: "\\sqrt{a^2} = |a|", desc: "Square Root of Square" },
+          { latex: "\\sqrt{ab} = \\sqrt{a} \\times \\sqrt{b}", desc: "Square Root Product" }
+        ]
+      },
+      factorization: {
+        name: "Factorization",
+        list: [
+          { latex: "a^2 - b^2 = (a+b)(a-b)", desc: "Difference of Squares" },
+          { latex: "a^2 + 2ab + b^2 = (a+b)^2", desc: "Perfect Square" },
+          { latex: "a^2 - 2ab + b^2 = (a-b)^2", desc: "Perfect Square (Minus)" },
+          { latex: "a^3 + b^3 = (a+b)(a^2-ab+b^2)", desc: "Sum of Cubes" },
+          { latex: "a^3 - b^3 = (a-b)(a^2+ab+b^2)", desc: "Difference of Cubes" }
+        ]
+      },
+      linearEquation: {
+        name: "Linear Equations",
+        list: [
+          { latex: "ax + b = 0", desc: "One-variable Linear" },
+          { latex: "\\begin{cases} a_1x + b_1y = c_1 \\\\ a_2x + b_2y = c_2 \\end{cases}", desc: "Two-variable System" },
+          { latex: "x = \\frac{c_1b_2 - c_2b_1}{a_1b_2 - a_2b_1}", desc: "Cramer's Rule 1" },
+          { latex: "y = \\frac{a_1c_2 - a_2c_1}{a_1b_2 - a_2b_1}", desc: "Cramer's Rule 2" }
+        ]
+      },
+      quadraticEquation: {
+        name: "Quadratic Equations",
+        list: [
+          { latex: "ax^2 + bx + c = 0", desc: "Standard Form" },
+          { latex: "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}", desc: "Root Formula" },
+          { latex: "\\Delta = b^2 - 4ac", desc: "Discriminant" },
+          { latex: "x_1 + x_2 = -\\frac{b}{a}", desc: "Sum of Roots" },
+          { latex: "x_1 \\times x_2 = \\frac{c}{a}", desc: "Product of Roots" }
+        ]
+      },
+      inequalities: {
+        name: "Inequalities",
+        list: [
+          { latex: "a > b \\Rightarrow a + c > b + c", desc: "Addition Property" },
+          { latex: "a > b, c>0 \\Rightarrow ac > bc", desc: "Multiplication (Positive)" },
+          { latex: "a > b, c<0 \\Rightarrow ac < bc", desc: "Multiplication (Negative)" },
+          { latex: "|x| < a \\Rightarrow -a < x < a", desc: "Absolute Value Inequality" },
+          { latex: "|x| > a \\Rightarrow x < -a \\text{ or } x > a", desc: "Absolute Value (Greater)" }
+        ]
+      }
     }
   },
   geometry: {
     name: "Geometry",
     sub: {
-      triangle: { name: "Triangle", list: [
-        { latex: "a^2 + b^2 = c^2", desc: "Pythagorean Theorem" },
-        { latex: "\\sin^2\\alpha + \\cos^2\\alpha = 1", desc: "Trigonometric Identity" }
-      ]},
-      circle: { name: "Circle", list: [
-        { latex: "S = \\pi r^2", desc: "Circle Area" },
-        { latex: "C = 2\\pi r", desc: "Circle Perimeter" }
-      ]}
+      triangle: {
+        name: "Triangles",
+        list: [
+          { latex: "a + b > c", desc: "Triangle Inequality" },
+          { latex: "\\angle A + \\angle B + \\angle C = 180^\\circ", desc: "Angle Sum" },
+          { latex: "a^2 + b^2 = c^2", desc: "Pythagorean Theorem" },
+          { latex: "\\sin A = \\frac{a}{2R}", desc: "Law of Sines" },
+          { latex: "a^2 = b^2 + c^2 - 2bc\\cos A", desc: "Law of Cosines" },
+          { latex: "S = \\frac{1}{2}ab\\sin C", desc: "Triangle Area" },
+          { latex: "S = \\sqrt{p(p-a)(p-b)(p-c)}, p=\\frac{a+b+c}{2}", desc: "Heron's Formula" }
+        ]
+      },
+      circle: {
+        name: "Circles",
+        list: [
+          { latex: "C = 2\\pi r", desc: "Circumference" },
+          { latex: "S = \\pi r^2", desc: "Area" },
+          { latex: "l = \\frac{n\\pi r}{180}", desc: "Arc Length" },
+          { latex: "S_{sector} = \\frac{n\\pi r^2}{360}", desc: "Sector Area" },
+          { latex: "(x-a)^2 + (y-b)^2 = r^2", desc: "Circle Equation" }
+        ]
+      },
+      polygons: {
+        name: "Polygons",
+        list: [
+          { latex: "(n-2) \\times 180^\\circ", desc: "Sum of Interior Angles" },
+          { latex: "360^\\circ", desc: "Sum of Exterior Angles" },
+          { latex: "S = \\frac{1}{2} \\times perimeter \\times apothem", desc: "Regular Polygon Area" }
+        ]
+      },
+      solid: {
+        name: "Solids",
+        list: [
+          { latex: "V = Sh", desc: "Prism Volume" },
+          { latex: "V = \\frac{1}{3}Sh", desc: "Pyramid Volume" },
+          { latex: "V = \\pi r^2h", desc: "Cylinder Volume" },
+          { latex: "V = \\frac{1}{3}\\pi r^2h", desc: "Cone Volume" },
+          { latex: "V = \\frac{4}{3}\\pi r^3", desc: "Sphere Volume" },
+          { latex: "S = 4\\pi r^2", desc: "Sphere Surface Area" }
+        ]
+      }
+    }
+  },
+  trigonometry: {
+    name: "Trigonometry",
+    sub: {
+      basic: {
+        name: "Basic Definitions",
+        list: [
+          { latex: "\\sin\\alpha = \\frac{opposite}{hypotenuse}", desc: "Sine Definition" },
+          { latex: "\\cos\\alpha = \\frac{adjacent}{hypotenuse}", desc: "Cosine Definition" },
+          { latex: "\\tan\\alpha = \\frac{opposite}{adjacent}", desc: "Tangent Definition" },
+          { latex: "\\cot\\alpha = \\frac{1}{\\tan\\alpha}", desc: "Cotangent" },
+          { latex: "\\sec\\alpha = \\frac{1}{\\cos\\alpha}", desc: "Secant" },
+          { latex: "\\csc\\alpha = \\frac{1}{\\sin\\alpha}", desc: "Cosecant" }
+        ]
+      },
+      identities: {
+        name: "Trigonometric Identities",
+        list: [
+          { latex: "\\sin^2\\alpha + \\cos^2\\alpha = 1", desc: "Pythagorean Identity" },
+          { latex: "1 + \\tan^2\\alpha = \\sec^2\\alpha", desc: "Tangent-Secant Identity" },
+          { latex: "1 + \\cot^2\\alpha = \\csc^2\\alpha", desc: "Cotangent-Cosecant Identity" },
+          { latex: "\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta", desc: "Sine Addition" },
+          { latex: "\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta", desc: "Cosine Addition" },
+          { latex: "\\sin2\\alpha = 2\\sin\\alpha\\cos\\alpha", desc: "Double Angle Sine" },
+          { latex: "\\cos2\\alpha = \\cos^2\\alpha - \\sin^2\\alpha", desc: "Double Angle Cosine" }
+        ]
+      },
+      specialAngles: {
+        name: "Special Angles",
+        list: [
+          { latex: "\\sin30^\\circ = \\frac{1}{2}", desc: "sin 30°" },
+          { latex: "\\sin45^\\circ = \\frac{\\sqrt{2}}{2}", desc: "sin 45°" },
+          { latex: "\\sin60^\\circ = \\frac{\\sqrt{3}}{2}", desc: "sin 60°" },
+          { latex: "\\cos30^\\circ = \\frac{\\sqrt{3}}{2}", desc: "cos 30°" },
+          { latex: "\\tan45^\\circ = 1", desc: "tan 45°" }
+        ]
+      }
+    }
+  },
+  sequences: {
+    name: "Sequences & Series",
+    sub: {
+      arithmetic: {
+        name: "Arithmetic Sequence",
+        list: [
+          { latex: "a_n = a_1 + (n-1)d", desc: "General Term" },
+          { latex: "S_n = \\frac{n(a_1+a_n)}{2}", desc: "Sum of Terms" },
+          { latex: "S_n = na_1 + \\frac{n(n-1)}{2}d", desc: "Sum Formula 2" }
+        ]
+      },
+      geometric: {
+        name: "Geometric Sequence",
+        list: [
+          { latex: "a_n = a_1q^{n-1}", desc: "General Term" },
+          { latex: "S_n = \\frac{a_1(1-q^n)}{1-q}, q\\neq1", desc: "Sum of Terms" },
+          { latex: "S = \\frac{a_1}{1-q}, |q|<1", desc: "Infinite Geometric Series" }
+        ]
+      },
+      combinatorics: {
+        name: "Combinatorics",
+        list: [
+          { latex: "A_n^m = \\frac{n!}{(n-m)!}", desc: "Permutation" },
+          { latex: "C_n^m = \\frac{n!}{m!(n-m)!}", desc: "Combination" },
+          { latex: "C_n^m = C_n^{n-m}", desc: "Combination Symmetry" },
+          { latex: "(a+b)^n = \\sum_{k=0}^n C_n^k a^{n-k}b^k", desc: "Binomial Theorem" }
+        ]
+      }
     }
   },
   calculus: {
     name: "Calculus",
     sub: {
-      derivative: { name: "Derivatives", list: [
-        { latex: "\\frac{dy}{dx}", desc: "First Derivative" },
-        { latex: "(x^n)' = nx^{n-1}", desc: "Power Rule" }
-      ]},
-      integral: { name: "Integrals", list: [
-        { latex: "\\int f(x) dx", desc: "Indefinite Integral" },
-        { latex: "\\int_{a}^{b} f(x) dx", desc: "Definite Integral" }
-      ]}
+      limits: {
+        name: "Limits",
+        list: [
+          { latex: "\\lim_{x \\to x_0} c = c", desc: "Limit of Constant" },
+          { latex: "\\lim_{x \\to \\infty} \\frac{1}{x} = 0", desc: "Limit of 1/x" },
+          { latex: "\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1", desc: "Important Limit 1" },
+          { latex: "\\lim_{x \\to \\infty} (1+\\frac{1}{x})^x = e", desc: "Important Limit 2" }
+        ]
+      },
+      derivatives: {
+        name: "Derivatives",
+        list: [
+          { latex: "\\frac{dy}{dx}", desc: "First Derivative" },
+          { latex: "y' = \\lim_{\\Delta x \\to 0} \\frac{\\Delta y}{\\Delta x}", desc: "Derivative Definition" },
+          { latex: "(C)' = 0", desc: "Derivative of Constant" },
+          { latex: "(x^n)' = nx^{n-1}", desc: "Power Rule" },
+          { latex: "(\\sin x)' = \\cos x", desc: "Derivative of sin" },
+          { latex: "(\\cos x)' = -\\sin x", desc: "Derivative of cos" },
+          { latex: "(e^x)' = e^x", desc: "Derivative of e^x" },
+          { latex: "(\\ln x)' = \\frac{1}{x}", desc: "Derivative of ln" }
+        ]
+      },
+      integrals: {
+        name: "Integrals",
+        list: [
+          { latex: "\\int k dx = kx + C", desc: "Integral of Constant" },
+          { latex: "\\int x^n dx = \\frac{x^{n+1}}{n+1} + C, n\\neq-1", desc: "Power Rule Integral" },
+          { latex: "\\int \\sin x dx = -\\cos x + C", desc: "Integral of sin" },
+          { latex: "\\int \\cos x dx = \\sin x + C", desc: "Integral of cos" },
+          { latex: "\\int e^x dx = e^x + C", desc: "Integral of e^x" },
+          { latex: "\\int_{a}^{b} f(x) dx = F(b)-F(a)", desc: "Newton-Leibniz Formula" }
+        ]
+      }
+    }
+  },
+  linearAlgebra: {
+    name: "Linear Algebra",
+    sub: {
+      matrices: {
+        name: "Matrices",
+        list: [
+          { latex: "\\begin{bmatrix}a & b \\\\ c & d\\end{bmatrix}", desc: "2x2 Matrix" },
+          { latex: "\\det\\begin{bmatrix}a & b \\\\ c & d\\end{bmatrix} = ad-bc", desc: "Determinant 2x2" },
+          { latex: "A^{-1} = \\frac{1}{\\det A}A^*", desc: "Inverse Matrix" },
+          { latex: "A^TA = I", desc: "Orthogonal Matrix" }
+        ]
+      },
+      vectors: {
+        name: "Vectors",
+        list: [
+          { latex: "\\vec{a} \\cdot \\vec{b} = |a||b|\\cos\\theta", desc: "Dot Product" },
+          { latex: "|\\vec{a} \\times \\vec{b}| = |a||b|\\sin\\theta", desc: "Cross Product Magnitude" }
+        ]
+      }
+    }
+  },
+  probability: {
+    name: "Probability & Statistics",
+    sub: {
+      basic: {
+        name: "Basic Probability",
+        list: [
+          { latex: "P(A) = \\frac{n(A)}{n(S)}", desc: "Classical Probability" },
+          { latex: "P(A \\cup B) = P(A)+P(B)-P(A \\cap B)", desc: "Addition Rule" },
+          { latex: "P(B|A) = \\frac{P(A \\cap B)}{P(A)}", desc: "Conditional Probability" },
+          { latex: "P(A \\cap B) = P(A)P(B)", desc: "Independent Events" }
+        ]
+      },
+      distributions: {
+        name: "Common Distributions",
+        list: [
+          { latex: "P(X=k) = C_n^kp^k(1-p)^{n-k}", desc: "Binomial Distribution" },
+          { latex: "f(x) = \\frac{1}{\\sqrt{2\\pi}\\sigma}e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}", desc: "Normal Distribution" },
+          { latex: "E(X) = \\sum x_iP(X=x_i)", desc: "Expected Value" },
+          { latex: "D(X) = E(X^2)-[E(X)]^2", desc: "Variance" }
+        ]
+      }
     }
   }
 };
