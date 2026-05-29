@@ -345,11 +345,27 @@ textarea {
   margin-bottom: 6px;
   font-size: 15px;
 }
+
+/* 返回主页按钮样式 */
+.back-home {
+  text-decoration: none;
+  font-size: 14px;
+  color: #2563eb;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.back-home:hover {
+  background: #eff6ff;
+}
 </style>
 </head>
 <body>
 
 <div class="header-bar">
+  <!-- 👇 这里加了返回主页链接 -->
+  <a href="../../index.html" class="back-home">← Back To Home</a>
+
   <div class="logo-title">LaTeX Formula Editor</div>
   <div class="header-actions">
     <span>Editor</span>
