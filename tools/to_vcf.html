@@ -4,184 +4,163 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-adsense-account" content="ca-pub-7102063652057406">
-  <title>CSV/Excel to VCF (vCard) Converter | Bulk Import Contacts to Phone</title>
-  <meta name="description" content="Free CSV/Excel to VCF converter to bulk import phone numbers & contacts to iPhone, Android, Samsung, Huawei. Easy, secure, no upload, 100% free.">
-  <meta name="keywords" content="csv to vcf, excel to vcf, bulk import contacts, import phone numbers to phone, convert excel to contacts, vcard converter, transfer contacts to iphone android">
+  <title>CSV/Excel to VCF (vCard) Converter | Bulk Import Contacts Safely</title>
+  <meta name="description" content="Free local CSV/Excel to VCF converter to bulk import contacts to iPhone, Android, Gmail & Outlook. 100% private client-side conversion with zero server tracking.">
+  <meta name="keywords" content="csv to vcf, excel to vcf, bulk import contacts, convert excel to contacts, vcard converter, transfer contacts to mobile">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7102063652057406"
-   crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7102063652057406" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <!-- 顶部导航栏：返回网站首页 -->
-  <header class="bg-white shadow-sm">
-    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="../index.html" class="text-blue-600 hover:text-blue-800 font-medium">
-        ← Back to Home
-      </a>
-      <span class="text-gray-500 text-sm">Free Online Tools</span>
-    </div>
-  </header>
 
-  <div class="max-w-4xl mx-auto px-4 py-10">
-    <div class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+<body class="bg-gray-50 min-h-screen flex flex-col justify-between">
+
+  <nav class="max-w-4xl mx-auto w-full px-4 pt-6 text-sm text-gray-500 flex items-center gap-2" aria-label="Breadcrumb">
+    <a href="../index.html" class="hover:text-blue-600 transition">Home</a>
+    <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/></svg>
+    <span class="text-gray-400">Study & Work Tools</span>
+    <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/></svg>
+    <span class="text-gray-800 font-medium" aria-current="page">CSV to VCF</span>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 py-10 flex-grow w-full">
+    <div class="bg-white rounded-xl shadow-sm p-6 md:p-8 border border-gray-100">
       <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">
         CSV / Excel to VCF (vCard) Converter
       </h1>
-      <p class="text-gray-500 text-center mb-8">
-        Bulk Import Phone Numbers & Contacts from Excel/CSV to iPhone or Android
+      <p class="text-gray-500 text-center text-sm md:text-base mb-8">
+        Bulk Import Phone Numbers & Client Lists from Excel/CSV to iOS or Android Instantly
       </p>
 
-      <!-- 格式说明 -->
-      <div class="bg-blue-50 text-blue-700 text-sm p-3 rounded-lg mb-6">
-        Supported columns: Name, Phone, Organization, Note<br>
-        You can use 2, 3 or 4 columns — all optional except Name + Phone
-      </div>
-
-      <!-- 上传区域 -->
-      <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mb-6 hover:border-blue-400 transition">
-        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" class="hidden" />
-        <button onclick="document.getElementById('fileInput').click()"
-          class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700">
-          Upload CSV or Excel File
-        </button>
-        <p class="mt-3 text-sm text-gray-500">Supported: .csv, .xlsx, .xls</p>
-      </div>
-
-      <!-- 配置 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="bg-blue-50 border border-blue-100 text-blue-800 text-sm p-4 rounded-xl mb-6 flex gap-3">
+        <svg class="w-5 h-5 text-blue-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Country Code (optional)</label>
-          <input type="text" id="countryCode" placeholder="e.g. +1, +44, +86" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+          <span class="font-semibold block mb-1">Supported Column Headers (Case-Insensitive):</span>
+          <p class="text-xs text-blue-700 leading-relaxed">
+            • <strong>Name</strong> (Required) &nbsp;|&nbsp; • <strong>Phone</strong> (Required)<br>
+            • <strong>Organization</strong> (Optional) &nbsp;|&nbsp; • <strong>Note</strong> (Optional)
+          </p>
         </div>
-        <div class="flex items-end">
-          <label class="inline-flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="removeDuplicate" checked class="w-4 h-4">
-            <span class="text-sm text-gray-700">Remove duplicate phone numbers</span>
+      </div>
+
+      <div class="border-2 border-dashed border-gray-200 hover:border-blue-400 bg-gray-50 rounded-xl p-8 text-center mb-6 transition cursor-pointer group" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" class="hidden" />
+        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+        </div>
+        <button class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-blue-700 shadow-sm transition mb-2">
+          Select Spreadsheet File
+        </button>
+        <p class="text-xs text-gray-400">Accepts Microsoft Excel (.xlsx, .xls) or raw CSV matrices</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">International Prefix (Optional)</label>
+          <input type="text" id="countryCode" placeholder="e.g., +1, +44, +86" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="flex items-center md:pt-5">
+          <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="removeDuplicate" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+            <span class="text-sm font-medium text-gray-700">Deduplicate identical phone records</span>
           </label>
         </div>
       </div>
 
-      <!-- 预览 -->
       <div class="mb-6">
-        <h3 class="font-medium text-gray-800 mb-2">Preview (First 5 Items)</h3>
-        <div id="preview" class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg h-40 overflow-y-auto whitespace-pre-line"></div>
+        <h3 class="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Live Dynamic Preview (Top 5 Entries)</h3>
+        <div id="preview" class="text-xs font-mono text-gray-500 bg-gray-900 text-gray-100 p-4 rounded-xl h-40 overflow-y-auto whitespace-pre border border-gray-800">Awaiting safe data stream upload...</div>
       </div>
 
-      <!-- 导出 -->
-      <div class="flex justify-center gap-4">
-        <button id="exportBtn" disabled class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 disabled:opacity-50">
-          Export VCF File
+      <div class="flex justify-center">
+        <button id="exportBtn" disabled class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm transition inline-flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          Build & Export VCF Format
         </button>
       </div>
     </div>
 
-    <div class="mt-6 text-sm text-gray-500">
-      <p>✓ All processing runs locally (no data uploaded to server)</p>
-      <p>✓ Supports iPhone, Android, Samsung, Huawei, Xiaomi</p>
-      <p>✓ Supports full name, phone, company, note</p>
+    <div class="mt-4 flex flex-wrap justify-center gap-6 text-xs text-gray-400">
+      <span class="flex items-center gap-1">🔒 100% Sandbox Execution (No Server Logs)</span>
+      <span class="flex items-center gap-1">⚡ Instant Client-side Rendering</span>
+      <span class="flex items-center gap-1">🌐 Fully Offline Functionality Capable</span>
     </div>
 
-    <!-- ====================== 【新增：大量SEO内容区域】 ====================== -->
-    <div class="max-w-4xl mx-auto mt-16 text-gray-700 space-y-10 leading-relaxed">
+    <hr class="border-gray-200 my-12">
 
-      <div>
-        <h2 class="text-2xl font-bold text-gray-800 mb-3">What is VCF (vCard)?</h2>
+    <section class="text-gray-600 space-y-10 text-sm md:text-base leading-relaxed">
+      
+      <div class="bg-white rounded-xl border border-gray-100 p-6 md:p-8 shadow-sm">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">Understanding the vCard (VCF) Standard Ecosystem</h2>
         <p class="mb-3">
-          VCF (also known as vCard) is a standard file format for storing contact information,
-          including names, phone numbers, email addresses, company names, and more.
+          A <strong>VCF file (Virtual Contact File)</strong>, also referenced universally as a vCard, represents the official cryptographic standard layout for transmitting address book directories across computing operating systems. While flat tabular spreadsheets like Microsoft Excel (XLSX) or comma-separated value matrices (CSV) are ideal for analytical computation and administrative updates, modern mobile phone frameworks cannot parse them directly.
         </p>
         <p>
-          It is the only format supported by nearly all mobile phones for <strong>bulk importing contacts</strong> at once.
+          By converting standard databases into encrypted compliance structural loops, our processor allows your hardware directory engine to instantly recognize metadata headers, binding multiple complex variable parameters into a single integrated digital business card element.
         </p>
       </div>
 
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">Why Convert Excel/CSV to VCF?</h3>
-        <p class="mb-3">
-          If you have a long list of phone numbers in Excel or CSV format, you cannot directly import them into your phone.
-          Mobile phones only recognize VCF files for batch contact import.
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-800 mb-3">Step-by-Step: Importing Contacts into Apple iOS</h3>
+          <p class="mb-2 text-xs text-gray-500">Follow this manual operation logic to update Apple hardware address frameworks:</p>
+          <ol class="list-decimal pl-5 space-y-1 text-xs text-gray-600">
+            <li>Generate and download the compiled <code>.vcf</code> package via our secure local sandbox interface.</li>
+            <li>Transmit the downloaded asset to your iPhone using AirDrop, an email attachment, or secure instant messaging.</li>
+            <li>Tap directly on the received file element inside your iOS environment.</li>
+            <li>The system native Address Book app will initialize a cascading interface overlay. Click <strong>"Add All Contacts"</strong> to complete integration.</li>
+          </ol>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-800 mb-3">Step-by-Step: Importing Contacts into Android OS</h3>
+          <p class="mb-2 text-xs text-gray-500">Applicable for Samsung, Huawei, Xiaomi, Oppo, and Google devices:</p>
+          <ol class="list-decimal pl-5 space-y-1 text-xs text-gray-600">
+            <li>Save the processed file compilation to your active Android device disk directory storage.</li>
+            <li>Open the native <strong>"Contacts" / "People"</strong> system utility.</li>
+            <li>Access the contextual parameters slide drawer or option layout dots, then choose <strong>"Manage Contacts"</strong> or <strong>"Settings"</strong>.</li>
+            <li>Click <strong>"Import/Export"</strong>, select the target source VCF package, and lock destination target to "Device Account" or connected Google Cloud sync channels.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-100 p-6 md:p-8 shadow-sm">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Troubleshooting & Implementation FAQ</h3>
+        <div class="space-y-4 divide-y divide-gray-100">
+          <div class="pt-3">
+            <h4 class="font-bold text-gray-800 mb-1">Q: Why do my converted contact strings display scrambled garbage symbols?</h4>
+            <p class="text-xs text-gray-600">
+              A: This phenomenon is caused by localized encoding syntax errors. Legacy Windows installations frequently export CSV databases using ANSI or regional system code blocks (such as GBK or Shift-JIS). Our processing script automatically senses structural deviations, forcing a compliance transformation into universal UTF-8 byte arrays to ensure cross-platform rendering precision.
+            </p>
+          </div>
+          <div class="pt-3">
+            <h4 class="font-bold text-gray-800 mb-1">Q: Does this converter platform track my customer directories?</h4>
+            <p class="text-xs text-gray-600">
+              A: No. Unlike traditional web services that send file uploads to a backend server infrastructure, our pipeline is entirely built on client-side compilation logic. Your records stay completely isolated within your active browser runtime workspace. It is technically impossible for external data leaks to occur.
+            </p>
+          </div>
+          <div class="pt-3">
+            <h4 class="font-bold text-gray-800 mb-1">Q: What happens if my file includes non-standard phone formatting configurations?</h4>
+            <p class="text-xs text-gray-600">
+              A: Our text normalizer isolates number rows, auto-stripping blank spacers, bracket boundaries, and horizontal dash lines. If an optional international country prefix is defined in the configuration panel, it will be added to records missing standard international prefixes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-100 rounded-xl p-6 text-center border border-gray-200">
+        <h4 class="font-bold text-gray-800 mb-2">Need Help Formatting Your Excel Sheets?</h4>
+        <p class="text-xs text-gray-500 mb-4 max-w-xl mx-auto">
+          Read our definitive troubleshooting guide detailing column structures, multi-line notes consolidation, and country code alignments to handle corporate address books perfectly.
         </p>
-        <p>
-          Converting your list to VCF allows you to <strong>import hundreds or thousands of contacts in one click</strong>
-          without typing them manually.
-        </p>
+        <a href="../blog/how-to-fix-vcf-contact-import-format-encoding-errors.html" class="text-blue-600 font-semibold text-sm hover:underline inline-flex items-center gap-1">
+          Read Advanced VCF Formatting Guide →
+        </a>
       </div>
 
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">Who Needs This Tool?</h3>
-        <ul class="list-disc pl-5 space-y-1">
-          <li>People who want to <strong>bulk import phone numbers to iPhone or Android</strong></li>
-          <li>Business users with large customer contact lists</li>
-          <li>Users switching phones and transferring contacts</li>
-          <li>Teachers, officers, and staff with group contact lists</li>
-          <li>Anyone who needs to add many contacts quickly</li>
-        </ul>
-      </div>
+    </section>
+    </main>
 
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">How to Bulk Import Contacts to Your Phone</h3>
-        <ol class="list-decimal pl-5 space-y-2">
-          <li>Prepare your contacts in Excel or CSV (Name + Phone required)</li>
-          <li>Upload the file to this converter</li>
-          <li>Export the VCF file</li>
-          <li>Send the VCF file to your phone (email, WhatsApp, Bluetooth)</li>
-          <li>Open the VCF file on your phone → <strong>import all contacts in one click</strong></li>
-        </ol>
-      </div>
-
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">Supported Phones</h3>
-        <p>
-          This VCF converter works with ALL mobile devices:
-        </p>
-        <ul class="list-disc pl-5 space-y-1">
-          <li>Apple iPhone (all iOS versions)</li>
-          <li>Android phones (Samsung, Huawei, Xiaomi, OPPO, VIVO, Google Pixel)</li>
-          <li>All tablets and mobile contact apps</li>
-          <li>Email clients (Gmail, Outlook, Yahoo)</li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">Tool Features</h3>
-        <ul class="list-disc pl-5 space-y-1">
-          <li>Convert Excel (.xlsx) and CSV to VCF in seconds</li>
-          <li>Support country code prefix (+1, +44, +86, etc.)</li>
-          <li>Auto remove duplicate phone numbers</li>
-          <li>Support full name, phone, company, and note</li>
-          <li>100% free with no limitations</li>
-          <li>No login, no upload, no data collection</li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">Privacy & Security</h3>
-        <p class="mb-3">
-          Your contact list is one of the most private types of data.
-          This tool processes EVERYTHING locally inside your browser.
-        </p>
-        <p>
-          <strong>No files are uploaded to any server.</strong>
-          Your contacts stay private and secure on your own device.
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">Common Searches That Bring You Here</h3>
-        <p class="text-sm text-gray-600">
-          bulk import contacts, import phone numbers to phone, excel to contacts, csv to phone contacts,
-          how to import excel contacts to android, how to import csv to iphone, convert xlsx to vcf free,
-          batch add phone numbers, transfer excel contacts to mobile
-        </p>
-      </div>
-
-    </div>
-    <!-- ======================================================================= -->
-  </div>
-
-  <footer class="bg-white py-8 border-t border-gray-200 mt-10">
-    <div class="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm">
+  <footer class="bg-white py-8 border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 text-center text-gray-500 text-sm">
       <p class="mb-2">© 2026 Lightweight Tools. All tools run locally in your browser, no data is uploaded to any server.</p>
       <div class="space-x-4">
         <a href="../privacy.html" class="text-gray-500 hover:text-gray-700 transition-colors">Privacy Policy</a>
@@ -197,7 +176,6 @@
     const exportBtn = document.getElementById('exportBtn');
     const preview = document.getElementById('preview');
 
-    // 文件上传
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -208,7 +186,7 @@
           let workbook;
           if (file.name.toLowerCase().endsWith('.csv')) {
             let text = new TextDecoder('utf-8').decode(new Uint8Array(e.target.result));
-            if (text.includes('�')) text = new TextDecoder('gbk').decode(new Uint8Array(e.target.result));
+            if (text.includes('')) text = new TextDecoder('gbk').decode(new Uint8Array(e.target.result));
             workbook = XLSX.read(text, { type: 'string' });
           } else {
             workbook = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
@@ -218,13 +196,12 @@
           const json = XLSX.utils.sheet_to_json(sheet);
           parseContacts(json);
         } catch (err) {
-          alert('File parsing failed. Please check your file.');
+          alert('File parsing failed. Please check your file format validation.');
         }
       };
       reader.readAsArrayBuffer(file);
     });
 
-    // 解析 4 列：Name / Phone / Organization / Note
     function parseContacts(json) {
       contactList = [];
       const code = document.getElementById('countryCode').value.trim();
@@ -257,16 +234,14 @@
       exportBtn.disabled = contactList.length === 0;
     }
 
-    // 预览
     function showPreview() {
-      if (contactList.length === 0) { preview.innerText = 'No valid contacts.'; return; }
+      if (contactList.length === 0) { preview.innerText = 'No valid contact array detected.'; return; }
       const list = contactList.slice(0, 5);
       preview.innerText = list.map((c, i) =>
-        `${i + 1}. Name: ${c.name}\n   Phone: ${c.phone}\n   Org: ${c.org || '-'}\n   Note: ${c.note || '-'}\n`
+        `[Record #${i + 1}]\n- Name: ${c.name}\n- Phone: ${c.phone}\n- Company: ${c.org || '-'}\n- Note: ${c.note || '-'}\n`
       ).join('\n');
     }
 
-    // 导出 VCF（支持公司 + 备注）
     exportBtn.addEventListener('click', () => {
       let vcf = '';
       contactList.forEach(c => {

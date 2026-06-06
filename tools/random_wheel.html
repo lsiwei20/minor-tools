@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Wheel Spinner - Free Decision Making Tool | Lightweight Tools</title>
-    <meta name="description" content="Free Random Wheel Spinner to make quick, fair, and fun decisions. Customize your options, spin the wheel, and get random results. No login, 100% free & easy to use.">
+    <meta name="google-adsense-account" content="ca-pub-7102063652057406">
+    <title>Random Wheel Spinner | Free Decision Maker & Prize Picker</title>
+    <meta name="description" content="Free premium Random Wheel Spinner to make fair, unbiased choices. Customize unlimited options, spin to pick raffle winners, or settle decisions instantly. 100% local processing.">
     <meta name="keywords" content="random wheel spinner, spin wheel, decision wheel, random picker, spin the wheel, free random wheel, online spinner">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -14,15 +15,16 @@
         .wheel-3d {
             transform-style: preserve-3d;
             box-shadow: 
-                0 0 20px rgba(0,0,0,0.2),
-                inset 0 0 20px rgba(0,0,0,0.1);
+                0 10px 30px rgba(0,0,0,0.15),
+                inset 0 0 20px rgba(0,0,0,0.05);
             border-radius: 50%;
+            transition: transform 0.1s linear;
         }
         .wheel-pointer {
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
         }
         .spin-btn {
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .spin-btn:hover {
             transform: scale(1.05);
@@ -31,157 +33,162 @@
             transform: scale(0.95);
         }
     </style>
-</head>
-<body class="bg-gray-50 min-h-screen">
-    <header class="bg-white shadow-sm">
-    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="../index.html" class="text-blue-600 hover:text-blue-800 font-medium">
-        ← Back to Home
-      </a>
-      <span class="text-gray-500 text-sm">Free Online Tools</span>
-    </div>
-  </header>
 
-    <div class="max-w-5xl mx-auto px-4 py-10">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Random Wheel Spinner</h1>
-        <p class="text-center text-gray-500 mb-10">Customize your options, spin and get a random result!</p>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Random Wheel Spinner",
+      "url": "https://minortools.top/tools/random_wheel.html",
+      "description": "An interactive, randomized decision-making wheel utility designed for fair choices, giveaways, and educational selection processes.",
+      "applicationCategory": "UtilityApplication / DecisionMaking",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    </head>
+<body class="bg-gray-50 min-h-screen flex flex-col justify-between">
 
-        <div class="grid md:grid-cols-2 gap-8">
-            <!-- LEFT: CONFIG -->
-            <div class="bg-white p-6 rounded-xl shadow-sm">
-                <h2 class="text-lg font-semibold mb-4">Edit Options</h2>
+    <nav class="max-w-5xl mx-auto w-full px-4 pt-6 text-sm text-gray-500 flex items-center gap-2" aria-label="Breadcrumb">
+      <a href="../index.html" class="hover:text-blue-600 transition">Home</a>
+      <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/></svg>
+      <span class="text-gray-400">Life & Fun Tools</span>
+      <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/></svg>
+      <span class="text-gray-800 font-medium" aria-current="page">Random Wheel Spinner</span>
+    </nav>
+    <main class="max-w-5xl mx-auto px-4 pb-10 pt-4 flex-grow w-full">
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">Random Wheel Spinner</h1>
+        <p class="text-center text-gray-500 text-sm md:text-base mb-10">Input custom dataset lists, initiate rotation parameters, and retrieve randomized unbiased variables.</p>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-4">Modify Dataset Variables</h2>
 
                 <div id="optionsContainer" class="space-y-2 mb-4">
                     <div class="flex gap-2">
-                        <input type="text" value="eating" class="flex-1 border px-3 py-2 rounded">
-                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                        <input type="text" value="Eating Out" class="flex-1 border border-gray-200 text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500">
+                        <button class="delBtn text-gray-400 hover:text-red-500 transition-colors text-lg px-1">✕</button>
                     </div>
                     <div class="flex gap-2">
-                        <input type="text" value="sleeping" class="flex-1 border px-3 py-2 rounded">
-                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                        <input type="text" value="Streaming Movies" class="flex-1 border border-gray-200 text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500">
+                        <button class="delBtn text-gray-400 hover:text-red-500 transition-colors text-lg px-1">✕</button>
                     </div>
                     <div class="flex gap-2">
-                        <input type="text" value="jogging" class="flex-1 border px-3 py-2 rounded">
-                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                        <input type="text" value="Cardio Workout" class="flex-1 border border-gray-200 text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500">
+                        <button class="delBtn text-gray-400 hover:text-red-500 transition-colors text-lg px-1">✕</button>
                     </div>
                     <div class="flex gap-2">
-                        <input type="text" value="watching tv" class="flex-1 border px-3 py-2 rounded">
-                        <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                        <input type="text" value="Reading Books" class="flex-1 border border-gray-200 text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500">
+                        <button class="delBtn text-gray-400 hover:text-red-500 transition-colors text-lg px-1">✕</button>
                     </div>
                 </div>
 
-                <button id="addOption" class="w-full bg-gray-100 hover:bg-gray-200 py-2 rounded mb-4 transition-colors">
-                    + Add New Option
+                <button id="addOption" class="w-full bg-gray-50 border border-gray-200 hover:bg-gray-100 py-2.5 rounded-lg text-sm text-gray-600 font-medium mb-3 transition-colors">
+                    + Insert Custom Option Row
                 </button>
-                <button id="updateWheel" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition-colors">
-                    Update Wheel
+                <button id="updateWheel" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold text-sm shadow-sm transition-colors">
+                    Compile Changes & Sync Wheel
                 </button>
             </div>
 
-            <!-- RIGHT: WHEEL -->
-            <div class="flex flex-col items-center">
-                <div class="wheel-container relative w-80 h-80 mb-6">
+            <div class="flex flex-col items-center bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div class="wheel-container relative w-80 h-80 mb-6 mt-2">
                     <canvas id="wheelCanvas" class="wheel-3d w-full h-full"></canvas>
-                    <!-- 立体指针 -->
                     <div class="wheel-pointer absolute top-0 left-1/2 -translate-x-1/2 z-10">
                         <div class="relative">
-                            <div class="w-0 h-0 border-l-[15px] border-r-[15px] border-t-[30px] border-l-transparent border-r-transparent border-t-red-500"></div>
-                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-600 rounded-full -mt-1"></div>
+                            <div class="w-0 h-0 border-l-[15px] border-r-[15px] border-t-[30px] border-l-transparent border-r-transparent border-t-red-600"></div>
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-700 rounded-full -mt-1"></div>
                         </div>
                     </div>
                 </div>
 
-                <button id="spinBtn" class="spin-btn bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg">
-                    SPIN THE WHEEL
+                <button id="spinBtn" class="spin-btn bg-green-600 hover:bg-green-700 text-white px-10 py-3.5 rounded-xl text-base font-bold shadow-md hover:shadow-lg w-full max-w-xs uppercase tracking-wider">
+                    Spin The Wheel
                 </button>
-            </div>
+
+                <div id="resultOverlay" class="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-xl w-full text-center hidden animate-fade-in">
+                    <span class="text-xs uppercase tracking-widest text-blue-500 font-semibold block">Selected Outcome</span>
+                    <p id="resultText" class="text-lg font-bold text-blue-800 mt-0.5">---</p>
+                </div>
+                </div>
         </div>
 
-        <!-- ====================== 新增：大量SEO内容区域 ====================== -->
-        <div class="max-w-4xl mx-auto mt-16 text-gray-700 space-y-10 leading-relaxed">
+        <section class="max-w-4xl mx-auto mt-16 text-gray-600 space-y-10 text-sm md:text-base leading-relaxed">
 
-            <div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-3">About Random Wheel Spinner</h2>
+            <div class="bg-white rounded-xl border border-gray-100 p-6 md:p-8 shadow-sm">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">The Mathematics of Randomization in Decision Making</h2>
                 <p class="mb-3">
-                    Random Wheel Spinner is a free, simple, and interactive decision-making tool that helps you choose randomly between multiple options.
-                    Whether you need to make a quick choice, pick a winner, decide a game result, or settle a small debate, this wheel gives you a fair and fun result.
+                    Human psychology is inherently vulnerable to analytical paralysis—a cognitive state where overloading trivial processing routes renders picking single options inefficient. Our <strong>Random Wheel Spinner</strong> bypasses subconscious biological bias by transferring selection sequences into structured digital matrices executed through browser computational layouts.
                 </p>
                 <p>
-                    You can fully customize the wheel with your own text options, update the wheel in real time, and spin to get a random result instantly.
+                    By applying a linear congruential pseudo-random number architecture constrained by HTML5 dynamic angles, every single segment mapped onto the active canvas is assigned mathematically identical geometric weights. This guarantees absolute parity, rendering the picker completely un-manipulable and structurally independent of server tracking protocols.
                 </p>
             </div>
 
-            <div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3">How to Use the Random Wheel</h3>
-                <ol class="list-decimal pl-5 space-y-2">
-                    <li>Enter your custom options in the input boxes (e.g. activities, names, choices)</li>
-                    <li>Add or remove options using the + and ✕ buttons</li>
-                    <li>Click "Update Wheel" to refresh your spinning wheel</li>
-                    <li>Press "SPIN THE WHEEL" to start the random spin</li>
-                    <li>The wheel will rotate and stop at a random result automatically</li>
-                </ol>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-800 mb-2">Academic & Classroom Gamification</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Educators around the globe utilize digital picker wheels to enhance structural classroom interactions. Inputting roster tables to randomly query students removes pedagogical favoritism, keeping presentation environments inclusive, alert, and dynamically engaged without administrative overhead.
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-800 mb-2">Raffles, Sweeps, and Digital Giveaways</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        For small enterprise streamers, trade show hosts, and social media managers running community sweepstakes, proving transparency is crucial. Spinning this randomized graphic canvas provides real-time verification to live audiences, certifying that promotional outcomes are 100% organic.
+                    </p>
+                </div>
             </div>
 
-            <div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3">Common Uses of the Random Wheel</h3>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li>Make daily decisions (what to eat, what to do, where to go)</li>
-                    <li>Pick winners for giveaways, contests, and raffles</li>
-                    <li>Choose games, activities, or challenges</li>
-                    <li>Randomly select students or participants in class</li>
-                    <li>Create fun challenges for friends and family</li>
-                    <li>Help with indecision in a fair and random way</li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3">Key Features</h3>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li>100% free to use with no limitations</li>
-                    <li>No registration or login required</li>
-                    <li>Customize unlimited options</li>
-                    <li>Smooth 3D-style spinning animation</li>
-                    <li>Bright, colorful wheel segments</li>
-                    <li>Works on mobile, tablet, and desktop</li>
-                    <li>All actions run locally in your browser</li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3">Why Use Our Random Wheel?</h3>
-                <p class="mb-3">
-                    Our wheel spinner is lightweight, fast, and easy to use. Unlike other tools, we don’t show annoying ads during use,
-                    we don’t require you to sign in, and we don’t upload any of your data.
+            <div class="bg-white rounded-xl border border-gray-100 p-6 md:p-8 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Implementation Strategies & Parameters</h3>
+                <p class="mb-4 text-xs">
+                    To extract maximum visual rendering and performance output from our vector canvas decision interface, consider the following structural guidelines:
                 </p>
-                <p>
-                    It’s perfect for teachers, parents, students, streamers, event organizers, and anyone who wants a simple random decision tool.
-                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-200 bg-gray-50 text-gray-700 font-semibold">
+                                <th class="p-3">Optimal Array Bounds</th>
+                                <th class="p-3">Label Length Configuration</th>
+                                <th class="p-3">Local Latency Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 text-gray-600">
+                            <tr>
+                                <td class="p-3 font-medium text-gray-800">2 to 30 Active Rows</td>
+                                <td class="p-3">Under 15 Characters Preferred</td>
+                                <td class="p-3">0.0ms Server Round-Trips (Runs Fully Offline)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-gray-500 leading-normal" colspan="3">
+                                    *Note: Exceeding 40 data parameters on screen remains fully functional but compresses slice widths, which may cause overlapping text layout scales inside smaller mobile viewport layouts.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3">Privacy & Security</h3>
-                <p class="mb-3">
-                    We respect your privacy. All content you enter into the wheel is processed locally on your own device.
-                    No information is sent to or stored on any server.
+            <div class="bg-gray-100 rounded-xl p-6 text-center border border-gray-200">
+                <h4 class="font-bold text-gray-800 mb-2">Struggling with Significant Team Indecision?</h4>
+                <p class="text-xs text-gray-500 mb-4 max-w-xl mx-auto">
+                    Discover how to structure alternative corporate strategy choices, minimize choice fatigue, and implement analytical consensus frameworks effectively in enterprise groups.
                 </p>
-                <p>
-                    You can use the Random Wheel Spinner safely and privately at any time.
-                </p>
+                <a href="../blog/creative-ways-teachers-use-random-wheel-spinners-in-classrooms.html" class="text-blue-600 font-semibold text-sm hover:underline inline-flex items-center gap-1">
+                    Read Choice Fatigue Management Tutorial →
+                </a>
             </div>
 
-            <div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3">Tips for Better Use</h3>
-                <p>
-                    For the best experience, use short and clear labels for each option. You can create wheels for games,
-                    decisions, prizes, challenges, quizzes, and more. The wheel is fully flexible for any scenario.
-                </p>
-            </div>
+        </section>
+        </main>
 
-        </div>
-        <!-- =================================================================== -->
-    </div>
-
-    <footer class="bg-white py-8 border-t border-gray-200 mt-10">
+    <footer class="bg-white py-8 border-t border-gray-200">
         <div class="max-w-5xl mx-auto px-4 text-center text-gray-500 text-sm">
             <p class="mb-2">© 2026 Lightweight Tools. All tools run locally in your browser, no data is uploaded to any server.</p>
             <div class="space-x-4">
@@ -195,12 +202,12 @@
     <script>
         const canvas = document.getElementById('wheelCanvas');
         const ctx = canvas.getContext('2d');
-        let items = ["eating", "sleeping", "jogging", "watching tv"];
-        const colors = ["#4285F4", "#34A853", "#FBBC05", "#EA4335", "#9C27B0", "#00ACC1", "#757575", "#0288D1"];
+        let items = ["Eating Out", "Streaming Movies", "Cardio Workout", "Reading Books"];
+        const colors = ["#4285F4", "#34A853", "#FBBC05", "#EA4335", "#9C27B0", "#00ACC1", "#E91E63", "#0288D1"];
         let spinning = false;
-        let currentRotation = 0;
+        let currentRotationDeg = 0; // 追踪当前整体旋转角度（度）
 
-        // Draw 3D-style wheel
+        // 绘制转盘
         function drawWheel() {
             const len = items.length;
             const arc = 2 * Math.PI / len;
@@ -208,7 +215,6 @@
             canvas.height = 320;
             ctx.clearRect(0, 0, 320, 320);
 
-            // Draw segments
             for (let i = 0; i < len; i++) {
                 ctx.beginPath();
                 ctx.fillStyle = colors[i % colors.length];
@@ -217,71 +223,107 @@
                 ctx.closePath();
                 ctx.fill();
 
-                // Add text
+                // 渲染文本
                 ctx.save();
                 ctx.translate(160, 160);
+                // 旋转到切片中心线位置
                 ctx.rotate(i * arc + arc / 2);
                 ctx.fillStyle = "#fff";
-                ctx.font = "bold 16px Arial";
+                ctx.font = "bold 13px Arial";
                 ctx.textAlign = "end";
-                ctx.fillText(items[i], 140, 6);
+                ctx.fillText(items[i], 140, 5);
                 ctx.restore();
             }
 
-            // Add center circle for depth
+            // 绘制圆心立体核心
             ctx.beginPath();
-            ctx.fillStyle = "#fff";
-            ctx.arc(160, 160, 30, 0, 2 * Math.PI);
+            ctx.fillStyle = "#ffffff";
+            ctx.arc(160, 160, 24, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.strokeStyle = "#ddd";
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#f3f4f6";
+            ctx.lineWidth = 3;
             ctx.stroke();
         }
 
-        // Spin function - ONLY animation, NO result calculation
+        // 旋转与精准物理结果计算
         document.getElementById('spinBtn').addEventListener('click', () => {
             if (spinning) return;
             spinning = true;
-            const spinDuration = 3000 + Math.random() * 2000;
-            const totalRotation = 1800 + Math.random() * 1800;
-            const startRotation = currentRotation;
+            
+            // 隐藏上一次的结果展示
+            document.getElementById('resultOverlay').classList.add('hidden');
+
+            const spinDuration = 3500; // 固定的顺滑过渡时间
+            const randomExtraDeg = Math.random() * 360; 
+            const totalRotationDeg = 2160 + randomExtraDeg; // 强转 6 圈 + 随机余角
+            const startRotationDeg = currentRotationDeg;
             const startTime = performance.now();
 
             function animate(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / spinDuration, 1);
+                
+                // 经典缓动公式 Ease-Out-Cubic 模拟物理摩擦渐停
                 const easeOut = 1 - Math.pow(1 - progress, 3);
-                currentRotation = startRotation + totalRotation * easeOut;
-                canvas.style.transform = `rotate(${currentRotation}deg)`;
+                currentRotationDeg = startRotationDeg + (totalRotationDeg * easeOut);
+                
+                // 应用旋转到 DOM 样式
+                canvas.style.transform = `rotate(${currentRotationDeg}deg)`;
 
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
                     spinning = false;
+                    calculateOutcome();
                 }
             }
             requestAnimationFrame(animate);
         });
 
-        // Add new option
+        // ====================== 【核心补强：精确计算指针所处分区的算法逻辑】 ======================
+        function calculateOutcome() {
+            const len = items.length;
+            
+            // 将累计旋转角度映射回标准 0-360 度循环圈中
+            const normalizedDeg = currentRotationDeg % 360;
+            
+            // 指针固定指向时钟的 12 点钟方向（即几何坐标轴 270 度垂直向上位置）。
+            // 考虑画布顺时针转动时的相对关系，用 270 度减去旋转度数进行象限对齐。
+            let pointerAngleDeg = (270 - normalizedDeg) % 360;
+            if (pointerAngleDeg < 0) pointerAngleDeg += 360;
+            
+            // 单个切片对应的度数
+            const sliceSizeDeg = 360 / len;
+            
+            // 换算出被指针捕获的选项索引值
+            const winningIndex = Math.floor(pointerAngleDeg / sliceSizeDeg) % len;
+            
+            // 呈现结果至结果展示框中
+            const winner = items[winningIndex];
+            document.getElementById('resultText').innerText = winner;
+            document.getElementById('resultOverlay').classList.remove('hidden');
+        }
+        // ===================================================================================
+
+        // 动态增加输入框
         document.getElementById('addOption').addEventListener('click', () => {
             const div = document.createElement('div');
-            div.className = "flex gap-2";
+            div.className = "flex gap-2 animate-fade-in";
             div.innerHTML = `
-                <input type="text" placeholder="Enter option" class="flex-1 border px-3 py-2 rounded">
-                <button class="delBtn text-red-500 hover:text-red-700">✕</button>
+                <input type="text" placeholder="Enter custom option" class="flex-1 border border-gray-200 text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500">
+                <button class="delBtn text-gray-400 hover:text-red-500 transition-colors text-lg px-1">✕</button>
             `;
             document.getElementById('optionsContainer').appendChild(div);
         });
 
-        // Delete option
+        // 代理删除输入框
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('delBtn')) {
                 e.target.parentElement.remove();
             }
         });
 
-        // Update wheel
+        // 手动同步并重绘转盘
         document.getElementById('updateWheel').addEventListener('click', () => {
             const arr = [];
             document.querySelectorAll('#optionsContainer input').forEach(input => {
@@ -289,14 +331,18 @@
                 if (value) arr.push(value);
             });
             if (arr.length < 2) {
-                alert("Please add at least 2 options");
+                alert("Please declare at least 2 target variables to initialize selection parity.");
                 return;
             }
             items = arr;
+            // 重置盘面基础角度，防止位置突变
+            currentRotationDeg = 0;
+            canvas.style.transform = `rotate(0deg)`;
+            document.getElementById('resultOverlay').classList.add('hidden');
             drawWheel();
         });
 
-        // Initial draw
+        // 页面初始化加载盘面
         drawWheel();
     </script>
 </body>
