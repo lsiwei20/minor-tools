@@ -11,7 +11,7 @@
 
   <!-- ====================== 【核心工具页面】 ====================== -->
   <url>
-    <loc>https://minortools.top/tools/latex_editor.html</loc>
+    <loc>https://minortools.top/tools/latex/main.html</loc>
     <lastmod>2026-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -41,7 +41,7 @@
   <!-- ====================== 【新增：博客系统】 ====================== -->
   <!-- 博客主列表页：因为你会不断发新文章，首页会有变动，所以设为 weekly -->
   <url>
-    <loc>https://minortools.top/blog/index.html</loc>
+    <loc>https://minortools.top/blog/creative-ways-teachers-use-random-wheel-spinners-in-classrooms.html</loc>
     <lastmod>2026-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -49,7 +49,7 @@
 
   <!-- 博客文章示例1：具体的文章写完基本不改，设为 monthly 即可 -->
   <url>
-    <loc>https://minortools.top/blog/excel-to-vcf-guide.html</loc>
+    <loc>https://minortools.top/blog/how-to-fix-vcf-contact-import-format-encoding-errors.html</loc>
     <lastmod>2026-06-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -57,7 +57,21 @@
 
   <!-- 博客文章示例2：机器学习数学公式参考手册 -->
   <url>
-    <loc>https://minortools.top/blog/math-formulas-for-machine-learning.html</loc>
+    <loc>https://minortools.top/blog/how-to-pick-a-cross-cultural-character-name-for-games-fiction.html</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://minortools.top/blog/top-10-most-commonly-used-elementary-math-formulas-in-machine-learning.html</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://minortools.top/blog/why-browser-local-tools-are-superior-for-personal-data-privacy.html</loc>
     <lastmod>2026-06-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
