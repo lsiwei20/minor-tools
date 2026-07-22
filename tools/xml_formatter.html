@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online XML Formatter & Beautifier | Minor Tools</title>
+  <meta name="description" content="Free online XML formatter, beautifier and validator. Easily format, indent, and minify your XML code instantly with live preview.">
+  <style>
+    /* 基础样式重置与全局变量 */
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --danger: #ef4444;
+      --border-color: #e2e8f0;
+      --code-bg: #1e293b;
+      --font-mono: 'Fira Code', Consolas, Monaco, 'Courier New', Courier, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* 顶部 Navigation/Header */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* 主内容区域布局 */
+    main {
+      flex: 1;
+      max-width: 1600px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .tool-header {
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-header h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .tool-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* 工具主操作区：左右双栏 */
+    .workspace {
+      display: flex;
+      gap: 1.5rem;
+      height: 600px;
+    }
+
+    /* 左右 Editor 容器 */
+    .editor-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    /* 编辑器顶部工具栏 */
+    .editor-toolbar {
+      padding: 0.75rem 1rem;
+      background-color: #f1f5f9;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .editor-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    select, button {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    select {
+      background-color: white;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: white;
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    /* 文本输入输出框 */
+    textarea {
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      border: none;
+      resize: none;
+      outline: none;
+      tab-size: 2;
+      background-color: #ffffff;
+      color: #0f172a;
+    }
+
+    textarea:focus {
+      background-color: #fafafa;
+    }
+
+    textarea[readonly] {
+      background-color: #f8fafc;
+    }
+
+    /* 错误信息提示条 */
+    .error-banner {
+      display: none;
+      padding: 0.75rem 1rem;
+      background-color: #fef2f2;
+      color: var(--danger);
+      border-top: 1px solid #fecaca;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+    }
+
+    /* 响应式适配：手机/小屏幕上下堆叠 */
+    @media (max-width: 900px) {
+      .workspace {
+        flex-direction: column;
+        height: auto;
+      }
+      .editor-container {
+        height: 400px;
+      }
+    }
+
+    /* 底部文章/应用指南区（预留白帽 SEO 提升内容厚度） */
+    .guide-section {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    .guide-section h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .guide-section p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部 Header -->
+  <header>
+    <a href="/" class="logo">Minor Tools</a>
+    <span class="subtitle">Lightweight Developer & Productivity Hub</span>
+  </header>
+
+  <!-- 主内容区 -->
+  <main>
+    <div class="tool-header">
+      <h1>Online XML Formatter & Beautifier</h1>
+      <p>Format, validate, and beautify unformatted XML data instantly using pure client-side processing.</p>
+    </div>
+
+    <!-- 核心工作区：左右双栏 -->
+    <div class="workspace">
+      
+      <!-- 左栏：未格式化的 XML -->
+      <div class="editor-container">
+        <div class="editor-toolbar">
+          <span class="editor-title">Input XML (Raw)</span>
+          <div class="button-group">
+            <button class="btn-secondary" id="btn-sample">Load Sample</button>
+            <button class="btn-secondary" id="btn-clear">Clear</button>
+          </div>
+        </div>
+        <textarea id="xml-input" placeholder="Paste your raw or minified XML code here..."></textarea>
+      </div>
+
+      <!-- 右栏：格式化后的 XML -->
+      <div class="editor-container">
+        <div class="editor-toolbar">
+          <span class="editor-title">Formatted XML</span>
+          <div class="button-group">
+            <label for="indent-select" style="font-size: 0.8rem; color: var(--text-muted);">Indent:</label>
+            <select id="indent-select">
+              <option value="2">2 Spaces</option>
+              <option value="4">4 Spaces</option>
+              <option value="\t">Tab</option>
+            </select>
+            <button class="btn-primary" id="btn-format">Format XML</button>
+            <button class="btn-secondary" id="btn-copy">Copy Output</button>
+          </div>
+        </div>
+        <textarea id="xml-output" readonly placeholder="Formatted XML will appear here automatically..."></textarea>
+        <!-- 语法错误提示框 -->
+        <div id="error-banner" class="error-banner"></div>
+      </div>
+
+    </div>
+
+    <!-- 底部 SEO & 应用指南（提高 E-E-A-T 分数，防止低价值判定） -->
+    <section class="guide-section">
+      <h2>How XML Formatting Works in Software Engineering</h2>
+      <p>XML (Extensible Markup Language) is widely used for configuration files, SOAP web services, RSS feeds, and data interchange. Minified or poorly formatted XML can be difficult to read and debug. This tool parses your raw XML string on the client side, detects parsing errors, and pretty-prints it with customizable indentation.</p>
+      <p><strong>Privacy Guarantee:</strong> All processing is done entirely in your browser using standard DOMParser APIs. Your XML data is never uploaded to any external server.</p>
+    </section>
+  </main>
+
+  <!-- 前端核心逻辑 JS (原生 JavaScript，零第三方库依赖) -->
+  <script>
+    const xmlInput = document.getElementById('xml-input');
+    const xmlOutput = document.getElementById('xml-output');
+    const indentSelect = document.getElementById('indent-select');
+    const errorBanner = document.getElementById('error-banner');
+
+    const btnFormat = document.getElementById('btn-format');
+    const btnCopy = document.getElementById('btn-copy');
+    const btnClear = document.getElementById('btn-clear');
+    const btnSample = document.getElementById('btn-sample');
+
+    // 示例 XML 数据
+    const sampleXml = `<?xml version="1.0" encoding="UTF-8"?><catalog><book id="bk101"><author>Gambardella, Matthew</author><title>XML Developer's Guide</title><genre>Computer</genre><price>44.95</price><publish_date>2000-10-01</publish_date><description>An in-depth look at creating applications with XML.</description></book><book id="bk102"><author>Ralls, Kim</author><title>Midnight Rain</title><genre>Fantasy</genre><price>5.95</price><publish_date>2000-12-16</publish_date><description>A former architect battles corporate zombies.</description></book></catalog>`;
+
+    // XML 格式化核心函数 (纯前端 DOMParser 验证 + 缩进格式化)
+    function formatXML() {
+      const rawXml = xmlInput.value.trim();
+      errorBanner.style.display = 'none';
+
+      if (!rawXml) {
+        xmlOutput.value = '';
+        return;
+      }
+
+      // 1. 验证 XML 语法合法性
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(rawXml, "text/xml");
+      const parserError = xmlDoc.getElementsByTagName("parsererror");
+
+      if (parserError.length > 0) {
+        errorBanner.innerText = "XML Syntax Error: " + parserError[0].textContent;
+        errorBanner.style.display = 'block';
+        xmlOutput.value = '';
+        return;
+      }
+
+      // 2. 格式化缩进处理
+      let indent = indentSelect.value;
+      if (indent !== '\t') {
+        indent = ' '.repeat(parseInt(indent));
+      }
+
+      let formatted = '';
+      let reg = /(>)(<)(\/*)/g;
+      let xml = rawXml.replace(reg, '$1\r\n$2$3');
+      let pad = 0;
+
+      xml.split('\r\n').forEach((node) => {
+        let indentAmount = 0;
+        if (node.match(/.+<\/\w[^>]*>$/)) {
+          indentAmount = 0;
+        } else if (node.match(/^<\/\w/)) {
+          if (pad !== 0) {
+            pad -= 1;
+          }
+        } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) {
+          indentAmount = 1;
+        } else {
+          indentAmount = 0;
+        }
+
+        let padding = '';
+        for (let i = 0; i < pad; i++) {
+          padding += indent;
+        }
+
+        formatted += padding + node + '\r\n';
+        pad += indentAmount;
+      });
+
+      xmlOutput.value = formatted.trim();
+    }
+
+    // 事件绑定
+    btnFormat.addEventListener('click', formatXML);
+    xmlInput.addEventListener('input', formatXML); // 实时输入实时响应
+    indentSelect.addEventListener('change', formatXML);
+
+    // 一键加载 Sample
+    btnSample.addEventListener('click', () => {
+      xmlInput.value = sampleXml;
+      formatXML();
+    });
+
+    // 清空
+    btnClear.addEventListener('click', () => {
+      xmlInput.value = '';
+      xmlOutput.value = '';
+      errorBanner.style.display = 'none';
+    });
+
+    // 一键复制输出结果
+    btnCopy.addEventListener('click', () => {
+      if (!xmlOutput.value) return;
+      navigator.clipboard.writeText(xmlOutput.value).then(() => {
+        const originalText = btnCopy.innerText;
+        btnCopy.innerText = 'Copied!';
+        btnCopy.style.backgroundColor = '#dcfce7';
+        btnCopy.style.color = '#15803d';
+        setTimeout(() => {
+          btnCopy.innerText = originalText;
+          btnCopy.style.backgroundColor = '';
+          btnCopy.style.color = '';
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>
