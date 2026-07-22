@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online XML Formatter & Beautifier | Minor Tools</title>
-  <meta name="description" content="Free online XML formatter, beautifier and validator. Easily format, indent, and minify your XML code instantly with live preview.">
+  <meta name="description" content="Free online XML formatter, beautifier and validator with syntax highlighting. Easily format, indent, and minify your XML code instantly with live preview.">
   <style>
     /* 基础样式重置与全局变量 */
     :root {
@@ -16,8 +16,15 @@
       --primary-hover: #1d4ed8;
       --danger: #ef4444;
       --border-color: #e2e8f0;
-      --code-bg: #1e293b;
       --font-mono: 'Fira Code', Consolas, Monaco, 'Courier New', Courier, monospace;
+
+      /* XML 语法高亮主题配色 (VS Code 风格) */
+      --syn-tag: #22863a;         /* 标签名: 绿色 */
+      --syn-attr-name: #6f42c1;   /* 属性名: 紫色 */
+      --syn-attr-val: #032f62;    /* 属性值: 蓝色 */
+      --syn-bracket: #24292e;     /* 尖括号 <>: 深灰 */
+      --syn-comment: #6a737d;     /* 注释: 灰色 */
+      --syn-content: #0f172a;     /* 节点文本内容: 黑色 */
     }
 
     * {
@@ -100,6 +107,7 @@
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       overflow: hidden;
+      position: relative;
     }
 
     /* 编辑器顶部工具栏 */
@@ -110,6 +118,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 2;
     }
 
     .editor-title {
@@ -158,7 +167,7 @@
       border-color: #cbd5e1;
     }
 
-    /* 文本输入输出框 */
+    /* 左侧纯文本输入框 */
     textarea {
       width: 100%;
       height: 100%;
@@ -174,13 +183,27 @@
       color: #0f172a;
     }
 
-    textarea:focus {
-      background-color: #fafafa;
+    /* 右侧语法高亮显示区域 */
+    .code-viewer {
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      overflow: auto;
+      background-color: #f8fafc;
+      color: var(--syn-content);
+      white-space: pre;
+      word-break: normal;
     }
 
-    textarea[readonly] {
-      background-color: #f8fafc;
-    }
+    /* 高亮 Token 颜色样式 */
+    .xml-tag { color: var(--syn-tag); font-weight: 600; }
+    .xml-attr-name { color: var(--syn-attr-name); }
+    .xml-attr-val { color: var(--syn-attr-val); }
+    .xml-bracket { color: var(--syn-bracket); font-weight: bold; }
+    .xml-comment { color: var(--syn-comment); font-style: italic; }
 
     /* 错误信息提示条 */
     .error-banner {
@@ -204,7 +227,7 @@
       }
     }
 
-    /* 底部文章/应用指南区（预留白帽 SEO 提升内容厚度） */
+    /* 底部文章/应用指南区 */
     .guide-section {
       margin-top: 2rem;
       padding: 2rem;
@@ -238,7 +261,7 @@
   <main>
     <div class="tool-header">
       <h1>Online XML Formatter & Beautifier</h1>
-      <p>Format, validate, and beautify unformatted XML data instantly using pure client-side processing.</p>
+      <p>Format, validate, and beautify unformatted XML data instantly with syntax highlighting using pure client-side processing.</p>
     </div>
 
     <!-- 核心工作区：左右双栏 -->
@@ -256,10 +279,10 @@
         <textarea id="xml-input" placeholder="Paste your raw or minified XML code here..."></textarea>
       </div>
 
-      <!-- 右栏：格式化后的 XML -->
+      <!-- 右栏：格式化 + 语法高亮后的 XML -->
       <div class="editor-container">
         <div class="editor-toolbar">
-          <span class="editor-title">Formatted XML</span>
+          <span class="editor-title">Formatted XML (Highlighted)</span>
           <div class="button-group">
             <label for="indent-select" style="font-size: 0.8rem; color: var(--text-muted);">Indent:</label>
             <select id="indent-select">
@@ -271,22 +294,23 @@
             <button class="btn-secondary" id="btn-copy">Copy Output</button>
           </div>
         </div>
-        <textarea id="xml-output" readonly placeholder="Formatted XML will appear here automatically..."></textarea>
+        <!-- 将原来的 textarea 升级为可显示色彩渲染的 pre/code 容器 -->
+        <pre class="code-viewer"><code id="xml-output">Formatted XML with syntax colors will appear here automatically...</code></pre>
         <!-- 语法错误提示框 -->
         <div id="error-banner" class="error-banner"></div>
       </div>
 
     </div>
 
-    <!-- 底部 SEO & 应用指南（提高 E-E-A-T 分数，防止低价值判定） -->
+    <!-- 底部 SEO & 应用指南 -->
     <section class="guide-section">
       <h2>How XML Formatting Works in Software Engineering</h2>
-      <p>XML (Extensible Markup Language) is widely used for configuration files, SOAP web services, RSS feeds, and data interchange. Minified or poorly formatted XML can be difficult to read and debug. This tool parses your raw XML string on the client side, detects parsing errors, and pretty-prints it with customizable indentation.</p>
+      <p>XML (Extensible Markup Language) is widely used for configuration files, SOAP web services, RSS feeds, and data interchange. Minified or poorly formatted XML can be difficult to read and debug. This tool parses your raw XML string on the client side, detects parsing errors, and pretty-prints it with customizable indentation and color syntax highlighting.</p>
       <p><strong>Privacy Guarantee:</strong> All processing is done entirely in your browser using standard DOMParser APIs. Your XML data is never uploaded to any external server.</p>
     </section>
   </main>
 
-  <!-- 前端核心逻辑 JS (原生 JavaScript，零第三方库依赖) -->
+  <!-- 前端核心逻辑 JS -->
   <script>
     const xmlInput = document.getElementById('xml-input');
     const xmlOutput = document.getElementById('xml-output');
@@ -298,20 +322,53 @@
     const btnClear = document.getElementById('btn-clear');
     const btnSample = document.getElementById('btn-sample');
 
+    // 存储无 HTML 标签的高亮纯文本，专门用于“一键复制”
+    let rawFormattedText = "";
+
     // 示例 XML 数据
     const sampleXml = `<?xml version="1.0" encoding="UTF-8"?><catalog><book id="bk101"><author>Gambardella, Matthew</author><title>XML Developer's Guide</title><genre>Computer</genre><price>44.95</price><publish_date>2000-10-01</publish_date><description>An in-depth look at creating applications with XML.</description></book><book id="bk102"><author>Ralls, Kim</author><title>Midnight Rain</title><genre>Fantasy</genre><price>5.95</price><publish_date>2000-12-16</publish_date><description>A former architect battles corporate zombies.</description></book></catalog>`;
 
-    // XML 格式化核心函数 (纯前端 DOMParser 验证 + 缩进格式化)
+    // 转义 HTML 字符，防止 XSS 攻击或标签混淆
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // 正则表达式：给转义后的 XML 字符串添加 HTML 颜色 span
+    function highlightXML(escapedXml) {
+      return escapedXml
+        // 高亮注释: &lt;!-- ... --&gt;
+        .replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="xml-comment">$1</span>')
+        // 高亮 XML 标签（含属性提取）
+        .replace(/(&lt;\/?[a-zA-Z0-9_\-\:]+)([\s\S]*?)(\/?&gt;)/g, function(match, p1, p2, p3) {
+          let tagStr = '<span class="xml-bracket">&lt;</span><span class="xml-tag">' + p1.substring(4) + '</span>';
+          
+          // 匹配属性: attr="value"
+          let attrStr = p2.replace(/([a-zA-Z0-9_\-\:]+)=(&quot;.*?&quot;|&#039;.*?&#039;)/g, function(m, aName, aVal) {
+            return '<span class="xml-attr-name"> ' + aName + '</span>=<span class="xml-attr-val">' + aVal + '</span>';
+          });
+
+          let closeBracketStr = '<span class="xml-bracket">' + p3 + '</span>';
+          return tagStr + attrStr + closeBracketStr;
+        });
+    }
+
+    // 核心格式化逻辑
     function formatXML() {
       const rawXml = xmlInput.value.trim();
       errorBanner.style.display = 'none';
 
       if (!rawXml) {
-        xmlOutput.value = '';
+        xmlOutput.innerHTML = 'Formatted XML with syntax colors will appear here automatically...';
+        rawFormattedText = "";
         return;
       }
 
-      // 1. 验证 XML 语法合法性
+      // 1. 验证语法正确性
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(rawXml, "text/xml");
       const parserError = xmlDoc.getElementsByTagName("parsererror");
@@ -319,11 +376,12 @@
       if (parserError.length > 0) {
         errorBanner.innerText = "XML Syntax Error: " + parserError[0].textContent;
         errorBanner.style.display = 'block';
-        xmlOutput.value = '';
+        xmlOutput.innerHTML = '';
+        rawFormattedText = "";
         return;
       }
 
-      // 2. 格式化缩进处理
+      // 2. 缩进排版
       let indent = indentSelect.value;
       if (indent !== '\t') {
         indent = ' '.repeat(parseInt(indent));
@@ -357,7 +415,14 @@
         pad += indentAmount;
       });
 
-      xmlOutput.value = formatted.trim();
+      rawFormattedText = formatted.trim();
+
+      // 3. 安全转义后赋予语法高亮色彩
+      const safeEscaped = escapeHtml(rawFormattedText);
+      const highlighted = highlightXML(safeEscaped);
+
+      // 渲染到页面
+      xmlOutput.innerHTML = highlighted;
     }
 
     // 事件绑定
@@ -365,7 +430,7 @@
     xmlInput.addEventListener('input', formatXML); // 实时输入实时响应
     indentSelect.addEventListener('change', formatXML);
 
-    // 一键加载 Sample
+    // 载入 Sample
     btnSample.addEventListener('click', () => {
       xmlInput.value = sampleXml;
       formatXML();
@@ -374,14 +439,15 @@
     // 清空
     btnClear.addEventListener('click', () => {
       xmlInput.value = '';
-      xmlOutput.value = '';
+      xmlOutput.innerHTML = 'Formatted XML with syntax colors will appear here automatically...';
+      rawFormattedText = "";
       errorBanner.style.display = 'none';
     });
 
-    // 一键复制输出结果
+    // 一键复制纯文本结果（自动过滤掉渲染用的 span 样式代码）
     btnCopy.addEventListener('click', () => {
-      if (!xmlOutput.value) return;
-      navigator.clipboard.writeText(xmlOutput.value).then(() => {
+      if (!rawFormattedText) return;
+      navigator.clipboard.writeText(rawFormattedText).then(() => {
         const originalText = btnCopy.innerText;
         btnCopy.innerText = 'Copied!';
         btnCopy.style.backgroundColor = '#dcfce7';
